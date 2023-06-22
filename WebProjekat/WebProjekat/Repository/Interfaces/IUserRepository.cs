@@ -8,5 +8,6 @@ namespace WebProjekat.Repository.Interfaces
         List<User> GetUsers();
         User GetUser(string email);
         void AddUser(User user);
+        void UpdateUser(User user);
     }
 }

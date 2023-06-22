@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Data;
 using WebProjekat.DTO.UserDTO;
 using WebProjekat.Interfaces;
@@ -37,6 +38,38 @@ namespace WebProjekat.Controllers
             if (userInfo == null)
                 return BadRequest("User doesn't exist");
             return Ok(userInfo);
+        }
+
+        [HttpPost("login")]
+        public IActionResult LogIn([FromBody] LogInUserDTO user)
+        {
+            TokenDTO token = _userService.LogInUser(user);
+            if (token == null)
+                return BadRequest("User doesn't exist");
+            else if (String.IsNullOrEmpty(token.Token))
+                return BadRequest("Incorrect password");
+
+            return Ok(token);
+        }
+
+        [HttpPost("update")]
+        [Authorize(Roles = "ADMIN,CUSTOMER,SELLER")]
+        public IActionResult UpdateUser([FromBody] UpdateUserDTO user)
+        {
+            bool result = _userService.UpdateUser(user);
+            if (result)
+                return Ok();
+            return BadRequest("Invalid email");
+        }
+
+        [HttpPost("passwordChange")]
+        [Authorize(Roles = "ADMIN,CUSTOMER,SELLER")]
+        public IActionResult ChangePassword([FromBody] ChangePasswordDTO data)
+        {
+            bool result = _userService.ChangePassword(data, out string message);
+            if (result)
+                return Ok();
+            return BadRequest(message);
         }
 
     }

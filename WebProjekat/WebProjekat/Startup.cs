@@ -100,6 +100,9 @@ namespace WebProjekat
             services.AddMvc();
             services.AddFluentValidationAutoValidation();
             services.AddScoped<IValidator<RegisterUserDTO>, RegisterUserDTOValidator>();
+            services.AddScoped<IValidator<LogInUserDTO>, LogInUserDTOValidator>();
+            services.AddScoped<IValidator<UpdateUserDTO>, UpdateUserDTOValidator>();
+            services.AddScoped<IValidator<ChangePasswordDTO>, ChangePasswordDTOValidator>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();

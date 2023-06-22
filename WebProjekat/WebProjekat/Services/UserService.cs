@@ -28,6 +28,35 @@ namespace WebProjekat.Services
             _mapper = mapper;
         }
 
+        public bool ChangePassword(ChangePasswordDTO data, out string message)
+        {
+            if (!data.NewPassword.Equals(data.NewPasswordConfirm))
+            {
+                message = "New password doesn't match";
+                return false;
+            }
+
+            var user = _userRepository.GetUser(data.Email);
+            if(user == null)
+            {
+                message = "User doesn't exist";
+                return false;
+            }
+
+            if (BCrypt.Net.BCrypt.Verify(data.OldPassword, user.Password))
+            {
+                user.Password = BCrypt.Net.BCrypt.HashPassword(data.NewPassword);
+                _userRepository.UpdateUser(user);
+                message = "Password updated";
+                return true;
+            }
+            else
+            {
+                message = "Incorrect password";
+                return false;
+            }
+        }
+
         public TokenDTO CreateUser(RegisterUserDTO newUser, out string message)
         {
             TokenDTO token = null;
@@ -81,7 +110,34 @@ namespace WebProjekat.Services
 
         public TokenDTO LogInUser(LogInUserDTO user)
         {
-            throw new System.NotImplementedException();
+            TokenDTO token = new TokenDTO();
+
+            var userInfo = _userRepository.GetUser(user.Email);
+            if (userInfo == null)
+                return null;
+
+            if (BCrypt.Net.BCrypt.Verify(user.Password, userInfo.Password))
+            {
+                token.Token = CreateToken(userInfo.UserType.ToString(), user.Email);
+                token.UserType = userInfo.UserType;
+            }
+            return token;
+        }
+
+        public bool UpdateUser(UpdateUserDTO user)
+        {
+            var userInfo = _userRepository.GetUser(user.Email);
+            if(userInfo == null)
+                return false;
+
+            userInfo.Username = user.Username;
+            userInfo.FirstName = user.FirstName;
+            userInfo.LastName = user.LastName;
+            userInfo.DateOfBirth = user.DateOfBirth;
+            userInfo.Address = user.Address;
+            _userRepository.UpdateUser(userInfo);
+
+            return true;
         }
 
         private string CreateToken(string userType, string email)

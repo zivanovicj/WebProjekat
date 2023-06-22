@@ -7,5 +7,7 @@ namespace WebProjekat.Interfaces
         TokenDTO LogInUser(LogInUserDTO user);
         TokenDTO CreateUser(RegisterUserDTO newUser, out string message);
         UserInfoDTO GetInfo(string email);
+        bool UpdateUser(UpdateUserDTO user);
+        bool ChangePassword(ChangePasswordDTO data, out string message);
     }
 }
