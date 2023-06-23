@@ -26,6 +26,7 @@ using WebProjekat.Repository;
 using WebProjekat.Repository.Interfaces;
 using WebProjekat.Services;
 using WebProjekat.Validators.UserValidators;
+using WebProjekat.Models;
 
 namespace WebProjekat
 {
@@ -41,7 +42,6 @@ namespace WebProjekat
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -105,7 +105,10 @@ namespace WebProjekat
             services.AddScoped<IValidator<ChangePasswordDTO>, ChangePasswordDTOValidator>();
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAdminRepository, AdminRepository>();
+
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAdminService, AdminService>();
 
             services.AddDbContext<DbContextWP>(options => options.UseSqlServer(Configuration.GetConnectionString("WebProjekatDB")));
         }
