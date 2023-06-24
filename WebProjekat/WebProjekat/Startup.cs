@@ -27,6 +27,8 @@ using WebProjekat.Repository.Interfaces;
 using WebProjekat.Services;
 using WebProjekat.Validators.UserValidators;
 using WebProjekat.Models;
+using WebProjekat.DTO.ProductDTO;
+using WebProjekat.Validators.ProductValidators;
 
 namespace WebProjekat
 {
@@ -104,12 +106,15 @@ namespace WebProjekat
             services.AddScoped<IValidator<LogInUserDTO>, LogInUserDTOValidator>();
             services.AddScoped<IValidator<UpdateUserDTO>, UpdateUserDTOValidator>();
             services.AddScoped<IValidator<ChangePasswordDTO>, ChangePasswordDTOValidator>();
+            services.AddScoped<IValidator<ProductDTO>, ProductDTOValidator>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAdminService, AdminService>();
+            services.AddScoped<IProductService, ProductService>();
 
             services.AddDbContext<DbContextWP>(options => options.UseSqlServer(Configuration.GetConnectionString("WebProjekatDB")));
         }
