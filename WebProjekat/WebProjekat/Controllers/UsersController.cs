@@ -52,6 +52,16 @@ namespace WebProjekat.Controllers
             return Ok(token);
         }
 
+        [HttpPost("googleLogin")]
+        public IActionResult GoogleLogIn([FromBody] GoogleLogInDTO user)
+        {
+            TokenDTO token = _userService.GoogleLogInUser(user);
+            if (token == null)
+                return BadRequest("An account has already been registered with this email");
+
+            return Ok(token);
+        }
+
         [HttpPost("update")]
         [Authorize(Roles = "ADMIN,CUSTOMER,SELLER")]
         public IActionResult UpdateUser([FromBody] UpdateUserDTO user)

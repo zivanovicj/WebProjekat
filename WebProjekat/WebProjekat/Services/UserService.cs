@@ -108,6 +108,22 @@ namespace WebProjekat.Services
             return _mapper.Map<UserInfoDTO>(user);
         }
 
+        public TokenDTO GoogleLogInUser(GoogleLogInDTO newUser)
+        {
+            var user = _userRepository.GetUser(newUser.Email);
+            if(user == null)
+                _userRepository.AddUser(_mapper.Map<Customer>(newUser));
+            if (user.UserType != EUserType.CUSTOMER)
+                return null;
+
+            TokenDTO token = new TokenDTO()
+            {
+                Token = CreateToken(EUserType.CUSTOMER.ToString(), newUser.Email),
+                UserType = EUserType.CUSTOMER
+            };
+            return token;
+        }
+
         public TokenDTO LogInUser(LogInUserDTO user)
         {
             TokenDTO token = new TokenDTO();

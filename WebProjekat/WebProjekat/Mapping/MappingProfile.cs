@@ -16,6 +16,7 @@ namespace WebProjekat.Mapping
             CreateMap<Admin, UserInfoDTO>().ReverseMap();
             CreateMap<Customer, UserInfoDTO>().ReverseMap();
             CreateMap<Seller, UserInfoDTO>().ReverseMap();
+            CreateMap<Customer, GoogleLogInDTO>().ReverseMap();
         }
     }
 }

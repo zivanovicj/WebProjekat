@@ -100,6 +100,7 @@ namespace WebProjekat
             services.AddMvc();
             services.AddFluentValidationAutoValidation();
             services.AddScoped<IValidator<RegisterUserDTO>, RegisterUserDTOValidator>();
+            services.AddScoped<IValidator<GoogleLogInDTO>, GoogleLogInDTOValidator>();
             services.AddScoped<IValidator<LogInUserDTO>, LogInUserDTOValidator>();
             services.AddScoped<IValidator<UpdateUserDTO>, UpdateUserDTOValidator>();
             services.AddScoped<IValidator<ChangePasswordDTO>, ChangePasswordDTOValidator>();
