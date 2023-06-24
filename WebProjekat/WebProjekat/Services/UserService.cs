@@ -61,6 +61,7 @@ namespace WebProjekat.Services
         {
             TokenDTO token = null;
             message = "";
+            string role = "";
             if (!newUser.Password.Equals(newUser.PasswordConfirm))
             {
                 message = "Passwords do not match";
@@ -75,6 +76,7 @@ namespace WebProjekat.Services
             }
 
             newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
+            role = newUser.UserType.ToString();
 
             switch (newUser.UserType)
             {
@@ -83,6 +85,7 @@ namespace WebProjekat.Services
 
                     break;
                 case EUserType.SELLER:
+                    role = "UNVERIFIED";
                     var seller = _mapper.Map<Seller>(newUser);
                     seller.Approved = ESellerStatus.IN_PROCESS;
                     _userRepository.AddUser(seller);
@@ -92,7 +95,7 @@ namespace WebProjekat.Services
 
             token = new TokenDTO()
             {
-                Token = CreateToken(newUser.UserType.ToString(), newUser.Email),
+                Token = CreateToken(role, newUser.Email),
                 UserType = newUser.UserType
             };
             return token;
@@ -132,9 +135,17 @@ namespace WebProjekat.Services
             if (userInfo == null)
                 return null;
 
+            string role = userInfo.UserType.ToString();
+
             if (BCrypt.Net.BCrypt.Verify(user.Password, userInfo.Password))
             {
-                token.Token = CreateToken(userInfo.UserType.ToString(), user.Email);
+                if (userInfo.UserType == EUserType.SELLER)
+                {
+                    var seller = (Seller)userInfo;
+                    if (seller.Approved != ESellerStatus.VERIFIED)
+                        role = "UNVERIFIED";
+                }
+                token.Token = CreateToken(role, user.Email);
                 token.UserType = userInfo.UserType;
             }
             return token;
