@@ -20,6 +20,26 @@ namespace WebProjekat.Services
             _mapper = mapper;
         }
 
+        public bool DeleteProduct(int productID, string sellerID, out string message)
+        {
+            Product product = _productRepository.GetProduct(productID);
+            if (product == null)
+            {
+                message = "Product doesn't exist";
+                return false;
+            }
+
+            if (!product.SellerID.Equals(sellerID))
+            {
+                message = "You can only delete your products";
+                return false;
+            }
+
+            _productRepository.DeleteProduct(product);
+            message = "Success";
+            return true;
+        }
+
         public List<ProductDTO> GetProducts()
         {
             return _mapper.Map<List<ProductDTO>>(_productRepository.GetProducts());
@@ -37,6 +57,37 @@ namespace WebProjekat.Services
         {
             var products = _productRepository.GetProducts();
             return _mapper.Map<List<ProductDTO>>(products.Where(x => x.SellerID.Equals(sellerID)));
+        }
+
+        public bool UpdateProduct(ProductDTO product, string sellerID, out string message)
+        {
+            if(product == null)
+            {
+                message = "Ivalid product ID";
+                return false;
+            }
+            Product oldProduct = _productRepository.GetProduct(product.ProductID);
+            if (oldProduct == null)
+            {
+                message = "Product doesn't exist";
+                return false;
+            }
+
+            if (!oldProduct.SellerID.Equals(sellerID))
+            {
+                message = "You can only modify your products";
+                return false;
+            }
+
+            oldProduct.ProductName = product.ProductName;
+            oldProduct.Amount = product.Amount;
+            oldProduct.Price = product.Price;
+            oldProduct.Description = product.Description;
+
+            _productRepository.UpdateProduct(oldProduct);
+
+            message = "Product updated";
+            return true;
         }
     }
 }

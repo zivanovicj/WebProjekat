@@ -19,9 +19,26 @@ namespace WebProjekat.Repository
             _dbContext.SaveChanges();
         }
 
+        public void DeleteProduct(Product product)
+        {
+            _dbContext.Products.Remove(product);
+            _dbContext.SaveChanges();
+        }
+
+        public Product GetProduct(int? id)
+        {
+            return _dbContext.Products.Find(id);
+        }
+
         public List<Product> GetProducts()
         {
             return _dbContext.Products.ToList();
+        }
+
+        public void UpdateProduct(Product product)
+        {
+            _dbContext.Products.Update(product);
+            _dbContext.SaveChanges();
         }
     }
 }

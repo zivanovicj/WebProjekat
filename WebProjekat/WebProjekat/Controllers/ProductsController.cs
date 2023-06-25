@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Data;
 using WebProjekat.DTO.ProductDTO;
 using WebProjekat.Interfaces;
@@ -41,6 +42,32 @@ namespace WebProjekat.Controllers
         public IActionResult GetProducts()
         {
             return Ok(_productService.GetProducts());
+        }
+
+        [HttpPost("modify/{productID}")]
+        public IActionResult ModifyProduct([FromBody] ProductDTO product, string productID)
+        {
+            if (!Int32.TryParse(productID, out int id))
+                return BadRequest("Invalid productID");
+
+            product.ProductID = id;
+            var res = _productService.UpdateProduct(product, User.Identity.Name, out string message);
+
+            if (!res)
+                return BadRequest(message);
+            return Ok(message);
+        }
+
+        [HttpDelete("remove/{productID}")]
+        public IActionResult RemoveProduct(string productID)
+        {
+            if (!Int32.TryParse(productID, out int id))
+                return BadRequest("Invalid productID");
+
+            var res = _productService.DeleteProduct(id, User.Identity.Name, out string message);
+            if (!res)
+                return BadRequest(message);
+            return Ok(message);
         }
     }
 }
