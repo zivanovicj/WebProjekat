@@ -4,20 +4,13 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using WebProjekat.DTO.UserDTO;
 using WebProjekat.Infrastructure;
 using WebProjekat.Interfaces;
@@ -26,9 +19,10 @@ using WebProjekat.Repository;
 using WebProjekat.Repository.Interfaces;
 using WebProjekat.Services;
 using WebProjekat.Validators.UserValidators;
-using WebProjekat.Models;
 using WebProjekat.DTO.ProductDTO;
 using WebProjekat.Validators.ProductValidators;
+using WebProjekat.DTO.OrderDTO;
+using WebProjekat.Validators.OrderValidators;
 
 namespace WebProjekat
 {
@@ -107,14 +101,18 @@ namespace WebProjekat
             services.AddScoped<IValidator<UpdateUserDTO>, UpdateUserDTOValidator>();
             services.AddScoped<IValidator<ChangePasswordDTO>, ChangePasswordDTOValidator>();
             services.AddScoped<IValidator<ProductDTO>, ProductDTOValidator>();
+            services.AddScoped<IValidator<OrderItemDTO>, OrderItemDTOValidator>();
+            services.AddScoped<IValidator<OrderDTO>, OrderDTOValidator>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IOrderService, OrderService>();
 
             services.AddDbContext<DbContextWP>(options => options.UseSqlServer(Configuration.GetConnectionString("WebProjekatDB")));
         }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using WebProjekat.DTO.OrderDTO;
 using WebProjekat.DTO.ProductDTO;
 using WebProjekat.DTO.UserDTO;
 using WebProjekat.Models;
@@ -19,6 +20,8 @@ namespace WebProjekat.Mapping
             CreateMap<Seller, UserInfoDTO>().ReverseMap();
             CreateMap<Customer, GoogleLogInDTO>().ReverseMap();
             CreateMap<Product, ProductDTO>().ReverseMap();
+            CreateMap<OrderItem, OrderItemDTO>().ReverseMap();
+            CreateMap<Order, OrderDTO>().ReverseMap();
         }
     }
 }
