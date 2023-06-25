@@ -22,6 +22,8 @@ namespace WebProjekat.Mapping
             CreateMap<Product, ProductDTO>().ReverseMap();
             CreateMap<OrderItem, OrderItemDTO>().ReverseMap();
             CreateMap<Order, OrderDTO>().ReverseMap();
+            CreateMap<Order, OrderDetailsDTO>().ReverseMap();
+            CreateMap<Product, OrderItemDetailsDTO>().ReverseMap();
         }
     }
 }

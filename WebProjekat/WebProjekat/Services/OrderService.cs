@@ -11,7 +11,7 @@ namespace WebProjekat.Services
 {
     public class OrderService : IOrderService
     {
-        private double _shipping = 5.5;
+        private readonly double _shipping = 5.5;
         private readonly IOrderRepository _orderRepository;
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
@@ -56,9 +56,79 @@ namespace WebProjekat.Services
             newOrder.DeliveryTime.AddHours(hours);
             newOrder.DeliveryTime.AddMinutes(minutes);
 
-            
-
             return _orderRepository.NewOrder(newOrder, products);
+        }
+
+        public bool CancelOrder(int orderID, string customerID, out string message)
+        {
+            var order = _orderRepository.GetOrderByID(orderID);
+            if (order == null)
+            {
+                message = "Order doesn't exist";
+                return false;
+            }
+
+            if (!order.CustomerID.Equals(customerID))
+            {
+                message = "You can only cancel your orders";
+                return false;
+            }
+
+            var timeSpan = DateTime.Now - order.TimeOfOrder;
+            if (timeSpan.Days > 0 || timeSpan.Hours > 1)
+            {
+                message = "You can only cancel orders within one hour of ordering";
+                return false;
+            }
+
+            var orderedItems = _orderRepository.GetOrderItems(orderID);
+            List<Product> products = new();
+
+            foreach (var orderItem in orderedItems)
+            {
+                var product = _productRepository.GetProduct(orderItem.ProductID);
+                if (product != null)
+                {
+                    product.Amount += orderItem.Quantity;
+                    products.Add(product);
+                }
+            }
+
+            order.OrderStatus = EOrderStatus.CANCELED;
+            var res = _orderRepository.CancelOrder(order, products);
+
+            if (res)
+            {
+                message = "success";
+                return true;
+            }
+            message = "Something went wrong";
+            return false;
+        }
+
+        public OrderDetailsDTO GetOrder(int orderID, string customerID, out string message)
+        {
+            var order = _orderRepository.GetOrderByID(orderID);
+            if (order == null)
+            {
+                message = "Order doesn't exist";
+                return null;
+            }
+
+            OrderDetailsDTO info = _mapper.Map<OrderDetailsDTO>(order);
+            info.Products = new List<OrderItemDetailsDTO>();
+
+            var orderItems = _orderRepository.GetOrderItems(orderID);
+
+            foreach (var orderItem in orderItems)
+            {
+                var product = _productRepository.GetProduct(orderItem.ProductID);
+                var productDetails = _mapper.Map<OrderItemDetailsDTO>(product);
+                productDetails.Quantity = orderItem.Quantity;
+                info.Products.Add(productDetails);
+            }
+            message = "Success";
+            return info;
         }
     }
 }
