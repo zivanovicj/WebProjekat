@@ -113,6 +113,7 @@ namespace WebProjekat
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddHostedService<DeliveryTimeService>();
 
             services.AddDbContext<DbContextWP>(options => options.UseSqlServer(Configuration.GetConnectionString("WebProjekatDB")));
         }
