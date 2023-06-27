@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WebProjekat.Common;
 using WebProjekat.Infrastructure;
 using WebProjekat.Models;
 using WebProjekat.Repository.Interfaces;
@@ -37,6 +38,13 @@ namespace WebProjekat.Repository
             }
         }
 
+        public List<Order> GetByStatus(string customerID, EOrderStatus orderStatus)
+        {
+            return _dbContext.Orders.Where(x => (x.CustomerID.Equals(customerID)) &&
+                                                (x.OrderStatus == orderStatus))
+                                     .ToList();
+        }
+
         public Order GetOrderByID(int orderID)
         {
             return _dbContext.Orders.Find(orderID);
@@ -45,6 +53,11 @@ namespace WebProjekat.Repository
         public List<OrderItem> GetOrderItems(int orderID)
         {
             return _dbContext.OrderItems.Where(x => x.OrderID == orderID).ToList();
+        }
+
+        public List<Order> GetOrders()
+        {
+            return _dbContext.Orders.ToList();
         }
 
         public bool NewOrder(Order order, List<Product> products)

@@ -130,5 +130,50 @@ namespace WebProjekat.Services
             message = "Success";
             return info;
         }
+
+        public List<OrderDTO> GetDeliveredOrders(string customerID)
+        {
+            return GetByCriteria(customerID, EOrderStatus.DELIVERED);
+        }
+
+        public List<OrderDTO> GetPendingOrders(string customerID)
+        {
+            return GetByCriteria(customerID, EOrderStatus.IN_PROGRESS);
+        }
+
+        public List<OrderDTO> GetCanceledOrders(string customerID)
+        {
+            return GetByCriteria(customerID , EOrderStatus.CANCELED);
+        }
+
+        public List<OrderDTO> GetOrders()
+        {
+            var orders = _orderRepository.GetOrders();
+            List<OrderDTO> retOrders = new();
+
+            foreach (var order in orders)
+            {
+                var mapped = _mapper.Map<OrderDTO>(order);
+                mapped.OrderedProducts = _mapper.Map<List<OrderItemDTO>>(_orderRepository.GetOrderItems(order.OrderID));
+                retOrders.Add(mapped);
+            }
+
+            return retOrders;
+        }
+
+        private List<OrderDTO> GetByCriteria(string customerID, EOrderStatus status)
+        {
+            var orders = _orderRepository.GetByStatus(customerID, status);
+            List<OrderDTO> retOrders = new();
+
+            foreach (var order in orders)
+            {
+                var mapped = _mapper.Map<OrderDTO>(order);
+                mapped.OrderedProducts = _mapper.Map<List<OrderItemDTO>>(_orderRepository.GetOrderItems(order.OrderID));
+                retOrders.Add(mapped);
+            }
+
+            return retOrders;
+        }
     }
 }
