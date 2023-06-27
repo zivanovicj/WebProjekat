@@ -10,5 +10,6 @@ namespace WebProjekat.Repository.Interfaces
         Product GetProduct(int? id);
         void UpdateProduct(Product product);
         void DeleteProduct(Product product);
+        List<int> GetProductsBySeller(string sellerID);
     }
 }

@@ -106,7 +106,7 @@ namespace WebProjekat.Services
             return false;
         }
 
-        public OrderDetailsDTO GetOrder(int orderID, string customerID, out string message)
+        public OrderDetailsDTO GetOrder(int orderID, out string message)
         {
             var order = _orderRepository.GetOrderByID(orderID);
             if (order == null)
@@ -174,6 +174,82 @@ namespace WebProjekat.Services
             }
 
             return retOrders;
+        }
+
+        public List<OrderDTO> GetDeliveredBySeller(string sellerID)
+        {
+            return GetBySeller(sellerID, EOrderStatus.DELIVERED);
+        }
+
+        private List<OrderDTO> GetBySeller(string sellerID, EOrderStatus status)
+        {
+            var productIDs = _productRepository.GetProductsBySeller(sellerID);
+            if (productIDs == null)
+                return null;
+
+            var orderIDs = _orderRepository.GetOrderItemsByProductIDs(productIDs);
+            if (orderIDs == null)
+                return null;
+
+            var orders = _orderRepository.GetOrdersBySeller(orderIDs, status);
+
+            List<OrderDTO> retOrders = new List<OrderDTO>();
+            foreach (var order in orders)
+            {
+                var mapped = _mapper.Map<OrderDTO>(order);
+                mapped.OrderedProducts = _mapper.Map<List<OrderItemDTO>>(_orderRepository.GetOrderItemsBySeller(order.OrderID, productIDs));
+                retOrders.Add(mapped);
+            }
+
+            return retOrders;
+        }
+
+        public List<OrderDTO> GetPendingBySeller(string sellerID)
+        {
+            return GetBySeller(sellerID, EOrderStatus.IN_PROGRESS);
+        }
+
+        public List<OrderDTO> GetCanceledSeller(string sellerID)
+        {
+            return GetBySeller(sellerID, EOrderStatus.CANCELED);
+        }
+
+        public OrderDetailsDTO GetOrderSeller(int orderID, string sellerID, out string message)
+        {
+            var productIDs = _productRepository.GetProductsBySeller(sellerID);
+            if (productIDs == null)
+            {
+                message = "You have no products";
+                return null;
+            }
+
+            var order = _orderRepository.GetOrderByID(orderID);
+            if (order == null)
+            {
+                message = "Order doesn't exist";
+                return null;
+            }
+
+            OrderDetailsDTO info = _mapper.Map<OrderDetailsDTO>(order);
+            info.Products = new List<OrderItemDetailsDTO>();
+
+            var orderItems = _orderRepository.GetOrderItemsBySeller(orderID, productIDs);
+
+            foreach (var orderItem in orderItems)
+            {
+                var product = _productRepository.GetProduct(orderItem.ProductID);
+                var productDetails = _mapper.Map<OrderItemDetailsDTO>(product);
+                productDetails.Quantity = orderItem.Quantity;
+                info.Products.Add(productDetails);
+
+            }
+            if(info.Products.Count == 0)
+            {
+                message = "You have no products in this order";
+                return null;
+            }
+            message = "Success";
+            return info;
         }
     }
 }

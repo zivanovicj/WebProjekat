@@ -5,6 +5,7 @@ using System;
 using System.Data;
 using WebProjekat.DTO.OrderDTO;
 using WebProjekat.Interfaces;
+using WebProjekat.Services;
 
 namespace WebProjekat.Controllers
 {
@@ -46,7 +47,7 @@ namespace WebProjekat.Controllers
             if (!Int32.TryParse(orderID, out int id))
                 return BadRequest("Invalid order");
 
-            var order = _orderService.GetOrder(id, User.Identity.Name, out string message);
+            var order = _orderService.GetOrder(id, out string message);
 
             if (order == null)
                 return NotFound(message);
@@ -54,6 +55,18 @@ namespace WebProjekat.Controllers
             if (!order.CustomerID.Equals(User.Identity.Name))
                 return BadRequest("You can only view details of your orders");
 
+            return Ok(order);
+        }
+
+        [HttpGet("seller/{orderID}")]
+        [Authorize(Roles = "SELLER")]
+        public IActionResult GetOrderSeller(string orderID)
+        {
+            if (!Int32.TryParse(orderID, out int id))
+                return BadRequest("Invalid order");
+            var order = _orderService.GetOrderSeller(id, User.Identity.Name, out string message);
+            if (order == null)
+                return NotFound(message);
             return Ok(order);
         }
 
@@ -83,6 +96,36 @@ namespace WebProjekat.Controllers
         public IActionResult GetOrders()
         {
             return Ok(_orderService.GetOrders());
+        }
+
+        [HttpGet("delieveredSeller")]
+        [Authorize(Roles = "SELLER")]
+        public IActionResult GetDelieveredSeller()
+        {
+            var orders = _orderService.GetDeliveredBySeller(User.Identity.Name);
+            if (orders == null)
+                return NotFound("No orders");
+            return Ok(orders);
+        }
+
+        [HttpGet("pendingSeller")]
+        [Authorize(Roles = "SELLER")]
+        public IActionResult GetPendingSeller()
+        {
+            var orders = _orderService.GetPendingBySeller(User.Identity.Name);
+            if (orders == null)
+                return NotFound("No orders");
+            return Ok(orders);
+        }
+
+        [HttpGet("canceledSeller")]
+        [Authorize(Roles = "SELLER")]
+        public IActionResult GetCanceledSeller()
+        {
+            var orders = _orderService.GetCanceledSeller(User.Identity.Name);
+            if (orders == null)
+                return NotFound("No orders");
+            return Ok(orders);
         }
     }
 }

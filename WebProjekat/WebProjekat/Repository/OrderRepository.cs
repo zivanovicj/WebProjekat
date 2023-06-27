@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1.X509;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,9 +56,30 @@ namespace WebProjekat.Repository
             return _dbContext.OrderItems.Where(x => x.OrderID == orderID).ToList();
         }
 
+        public List<int> GetOrderItemsByProductIDs(List<int> productIDs)
+        {
+            return _dbContext.OrderItems.Where(x => productIDs.Contains(x.ProductID))
+                                        .Select(x => x.OrderID)
+                                        .ToList();
+        }
+
+        public List<OrderItem> GetOrderItemsBySeller(int orderID, List<int> productIDs)
+        {
+            return _dbContext.OrderItems.Where(x => (x.OrderID == orderID) &&
+                                                     (productIDs.Contains(x.ProductID)))
+                                        .ToList();
+        }
+
         public List<Order> GetOrders()
         {
             return _dbContext.Orders.ToList();
+        }
+
+        public List<Order> GetOrdersBySeller(List<int> orderIDs, EOrderStatus orderStatus)
+        {
+            return _dbContext.Orders.Where(x => (orderIDs.Contains(x.OrderID)) &&
+                                                (x.OrderStatus == orderStatus))
+                                    .ToList();
         }
 
         public bool NewOrder(Order order, List<Product> products)

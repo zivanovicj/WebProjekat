@@ -30,6 +30,13 @@ namespace WebProjekat.Repository
             return _dbContext.Products.Find(id);
         }
 
+        public List<int> GetProductsBySeller(string sellerID)
+        {
+            return _dbContext.Products.Where(x => x.SellerID.Equals(sellerID))
+                                      .Select(x => x.ProductID)
+                                      .ToList();
+        }
+
         public List<Product> GetProducts()
         {
             return _dbContext.Products.ToList();
