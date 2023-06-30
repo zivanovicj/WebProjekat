@@ -9,5 +9,8 @@ namespace WebProjekat.Repository.Interfaces
         User GetUser(string email);
         void AddUser(User user);
         void UpdateUser(User user);
+        void AddUserImage(UserImage image);
+        UserImage GetUserImage(string userID);
+        void UpdateUserImage(UserImage image);
     }
 }

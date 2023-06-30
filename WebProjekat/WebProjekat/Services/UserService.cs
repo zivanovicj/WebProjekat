@@ -12,6 +12,9 @@ using WebProjekat.DTO.UserDTO;
 using WebProjekat.Interfaces;
 using WebProjekat.Models;
 using WebProjekat.Repository.Interfaces;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using WebProjekat.Repository;
 
 namespace WebProjekat.Services
 {
@@ -26,6 +29,19 @@ namespace WebProjekat.Services
             _secretKey = config.GetSection("SecretKey");
             _userRepository = userRepository;
             _mapper = mapper;
+        }
+
+        public void AddUserImage(string userID, IFormFile file)
+        {
+            UserImage image = new() { ImageTitle = file.FileName, UserID = userID };
+
+            MemoryStream ms = new MemoryStream();
+            file.CopyTo(ms);
+            image.ImageData = ms.ToArray();
+            ms.Close();
+            ms.Dispose();
+
+            _userRepository.AddUserImage(image);
         }
 
         public bool ChangePassword(ChangePasswordDTO data, out string message)
@@ -111,6 +127,11 @@ namespace WebProjekat.Services
             return _mapper.Map<UserInfoDTO>(user);
         }
 
+        public UserImage GetUserImage(string userID)
+        {
+            return _userRepository.GetUserImage(userID);
+        }
+
         public TokenDTO GoogleLogInUser(GoogleLogInDTO newUser)
         {
             var user = _userRepository.GetUser(newUser.Email);
@@ -164,6 +185,23 @@ namespace WebProjekat.Services
             userInfo.Address = user.Address;
             _userRepository.UpdateUser(userInfo);
 
+            return true;
+        }
+
+        public bool UpdateUserImage(IFormFile file, string userID)
+        {
+            var userImage = _userRepository.GetUserImage(userID);
+            if (userImage == null) return false;
+            if (userImage.UserID != userID) return false;
+
+            MemoryStream ms = new MemoryStream();
+            file.CopyTo(ms);
+            userImage.ImageData = ms.ToArray();
+
+            ms.Close();
+            ms.Dispose();
+
+            _userRepository.UpdateUserImage(userImage);
             return true;
         }
 

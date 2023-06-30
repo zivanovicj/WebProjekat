@@ -5,6 +5,7 @@ using System;
 using System.Data;
 using WebProjekat.DTO.UserDTO;
 using WebProjekat.Interfaces;
+using WebProjekat.Services;
 
 namespace WebProjekat.Controllers
 {
@@ -82,5 +83,35 @@ namespace WebProjekat.Controllers
             return BadRequest(message);
         }
 
+        [HttpPost("userImage")]
+        [Authorize(Roles = "SELLER,ADMIN,CUSTOMER")]
+        public IActionResult UploadImage(IFormFile file)
+        {
+            _userService.AddUserImage(User.Identity.Name, file);
+            return Ok();
+        }
+
+        [HttpGet("usrimg/{userID}")]
+        public IActionResult GetProductImage(string userID)
+        {
+            var image = _userService.GetUserImage(userID);
+            if (image == null)
+                return NotFound();
+
+            string imageBase64Data = Convert.ToBase64String(image.ImageData);
+            string imageDataURL = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+
+            return Ok(imageDataURL);
+        }
+
+        [HttpPost("usrimgUpdate")]
+        [Authorize(Roles = "SELLER,ADMIN,CUSTOMER")]
+        public IActionResult UpdateImage(IFormFile file)
+        {
+            var result = _userService.UpdateUserImage(file, User.Identity.Name);
+            if (!result)
+                return NotFound("You can only update your image");
+            return Ok();
+        }
     }
 }

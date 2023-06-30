@@ -1,4 +1,6 @@
-﻿using WebProjekat.DTO.UserDTO;
+﻿using Microsoft.AspNetCore.Http;
+using WebProjekat.DTO.UserDTO;
+using WebProjekat.Models;
 
 namespace WebProjekat.Interfaces
 {
@@ -10,5 +12,8 @@ namespace WebProjekat.Interfaces
         UserInfoDTO GetInfo(string email);
         bool UpdateUser(UpdateUserDTO user);
         bool ChangePassword(ChangePasswordDTO data, out string message);
+        void AddUserImage(string userID, IFormFile file);
+        UserImage GetUserImage(string userID);
+        bool UpdateUserImage(IFormFile file, string userID);
     }
 }

@@ -20,6 +20,17 @@ namespace WebProjekat.Repository
             _dbContext.SaveChanges();
         }
 
+        public void AddUserImage(UserImage image)
+        {
+            _dbContext.UserImages.Add(image);
+            _dbContext.SaveChanges();
+        }
+
+        public UserImage GetUserImage(string userID)
+        {
+            return _dbContext.UserImages.Where(x => x.UserID == userID).FirstOrDefault();
+        }
+
         public User GetUser(string email)
         {
             return _dbContext.Users.Where(x => x.Email.Equals(email)).FirstOrDefault();
@@ -28,6 +39,12 @@ namespace WebProjekat.Repository
         public List<User> GetUsers()
         {
             return _dbContext.Users.ToList();
+        }
+
+        public void UpdateUserImage(UserImage image)
+        {
+            _dbContext.UserImages.Update(image);
+            _dbContext.SaveChanges();
         }
 
         public void UpdateUser(User user)
