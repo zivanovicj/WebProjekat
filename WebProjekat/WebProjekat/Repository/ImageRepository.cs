@@ -23,5 +23,11 @@ namespace WebProjekat.Repository
         {
             return _dbContext.ProductImages.Where(x => x.ProductID == productID).FirstOrDefault();
         }
+
+        public void UpdateProductImage(ProductImage image)
+        {
+            _dbContext.ProductImages.Update(image);
+            _dbContext.SaveChanges();
+        }
     }
 }

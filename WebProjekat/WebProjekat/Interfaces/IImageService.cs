@@ -7,5 +7,6 @@ namespace WebProjekat.Interfaces
     {
         bool AddProductImage(int productID, string sellerID, IFormFile file);
         ProductImage GetProductImage(int productID);
+        bool UpdateProductImage(IFormFile file, string sellerID, int productID);
     }
 }

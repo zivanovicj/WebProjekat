@@ -48,5 +48,18 @@ namespace WebProjekat.Controllers
 
             return Ok(imageDataURL);
         }
+        [HttpPost("pimgUpdate/{productID}")]
+        [Authorize(Roles = "SELLER")]
+        public IActionResult UpdateImage(string productID, IFormFile file)
+        {
+            var result = Int32.TryParse(productID, out var pid);
+            if (!result)
+                return BadRequest("Invalid product ID");
+
+            result = _imageService.UpdateProductImage(file, User.Identity.Name, pid);
+            if (!result)
+                return NotFound("You can only update images of your products");
+            return Ok();
+        }
     }
 }

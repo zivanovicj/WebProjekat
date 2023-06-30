@@ -48,5 +48,24 @@ namespace WebProjekat.Services
         {
             return _imageRepository.GetProductImage(productID);
         }
+
+        public bool UpdateProductImage(IFormFile file, string sellerID, int productID)
+        {
+            var product = _productRepository.GetProduct(productID);
+            if(product == null) return false;
+            if(product.SellerID  != sellerID) return false;
+
+            var image = _imageRepository.GetProductImage(productID);
+
+            MemoryStream ms = new MemoryStream();
+            file.CopyTo(ms);
+            image.ImageData = ms.ToArray();
+
+            ms.Close();
+            ms.Dispose();
+
+            _imageRepository.UpdateProductImage(image);
+            return true;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WebProjekat.Infrastructure;
 using WebProjekat.Models;
@@ -19,10 +20,25 @@ namespace WebProjekat.Repository
             _dbContext.SaveChanges();
         }
 
-        public void DeleteProduct(Product product)
+        public bool DeleteProduct(Product product, ProductImage productImage)
         {
-            _dbContext.Products.Remove(product);
-            _dbContext.SaveChanges();
+            using var transaction = _dbContext.Database.BeginTransaction();
+            try
+            {
+                _dbContext.Products.Remove(product);
+                _dbContext.SaveChanges();
+
+                _dbContext.ProductImages.Remove(productImage);
+                _dbContext.SaveChanges();
+
+                transaction.Commit();
+                return true;
+            }
+            catch(Exception e)
+            {
+                transaction.Rollback();
+                return false;
+            }
         }
 
         public Product GetProduct(int? id)

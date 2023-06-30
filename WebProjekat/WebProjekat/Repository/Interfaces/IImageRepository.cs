@@ -6,5 +6,6 @@ namespace WebProjekat.Repository.Interfaces
     {
         void AddProductImage(ProductImage image);
         ProductImage GetProductImage(int productID);
+        void UpdateProductImage(ProductImage image);
     }
 }

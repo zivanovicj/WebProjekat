@@ -12,17 +12,20 @@ namespace WebProjekat.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
+        private readonly IImageRepository _imageRepository;
         private readonly IMapper _mapper;
 
-        public ProductService(IProductRepository productRepository, IMapper mapper)
+        public ProductService(IProductRepository productRepository, IMapper mapper, IImageRepository imageRepository)
         {
             _productRepository = productRepository;
             _mapper = mapper;
+            _imageRepository = imageRepository;
         }
 
         public bool DeleteProduct(int productID, string sellerID, out string message)
         {
             Product product = _productRepository.GetProduct(productID);
+            ProductImage productImage = _imageRepository.GetProductImage(productID);
             if (product == null)
             {
                 message = "Product doesn't exist";
@@ -35,7 +38,7 @@ namespace WebProjekat.Services
                 return false;
             }
 
-            _productRepository.DeleteProduct(product);
+            _productRepository.DeleteProduct(product, productImage);
             message = "Success";
             return true;
         }
