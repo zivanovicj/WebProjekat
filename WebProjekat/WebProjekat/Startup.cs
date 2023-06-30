@@ -108,11 +108,13 @@ namespace WebProjekat
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IImageRepository, ImageRepository>();
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IImageService, ImageService>();
             services.AddHostedService<DeliveryTimeService>();
 
             services.AddDbContext<DbContextWP>(options => options.UseSqlServer(Configuration.GetConnectionString("WebProjekatDB")));
