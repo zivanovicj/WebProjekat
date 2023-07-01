@@ -13,6 +13,7 @@ namespace WebProjekat.Repository
     public class OrderRepository : IOrderRepository
     {
         private readonly DbContextWP _dbContext;
+        private readonly object lockObject = new object();
         public OrderRepository(DbContextWP dbContext)
         {
             _dbContext = dbContext;
@@ -23,14 +24,17 @@ namespace WebProjekat.Repository
             using var transaction = _dbContext.Database.BeginTransaction();
             try
             {
-                _dbContext.Products.UpdateRange(products);
-                _dbContext.SaveChanges();
+                lock (lockObject)
+                {
+                    _dbContext.Products.UpdateRange(products);
+                    _dbContext.SaveChanges();
 
-                _dbContext.Orders.Update(order);
-                _dbContext.SaveChanges();
+                    _dbContext.Orders.Update(order);
+                    _dbContext.SaveChanges();
 
-                transaction.Commit();
-                return true;
+                    transaction.Commit();
+                    return true;
+                }
             }
             catch (Exception e)
             {
@@ -87,14 +91,17 @@ namespace WebProjekat.Repository
             using var transaction = _dbContext.Database.BeginTransaction();
             try
             {
-                _dbContext.Products.UpdateRange(products);
-                _dbContext.SaveChanges();
+                lock (lockObject)
+                {
+                    _dbContext.Products.UpdateRange(products);
+                    _dbContext.SaveChanges();
 
-                _dbContext.Orders.Add(order);
-                _dbContext.SaveChanges();
+                    _dbContext.Orders.Add(order);
+                    _dbContext.SaveChanges();
 
-                transaction.Commit();
-                return true;
+                    transaction.Commit();
+                    return true;
+                }
             }
             catch(Exception e)
             {

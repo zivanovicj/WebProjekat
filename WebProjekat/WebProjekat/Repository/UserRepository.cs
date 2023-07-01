@@ -9,6 +9,7 @@ namespace WebProjekat.Repository
     public class UserRepository : IUserRepository
     {
         private readonly DbContextWP _dbContext;
+        private readonly object lockObject = new object();
         public UserRepository(DbContextWP dbContext)
         {
             _dbContext = dbContext;
@@ -43,14 +44,20 @@ namespace WebProjekat.Repository
 
         public void UpdateUserImage(UserImage image)
         {
-            _dbContext.UserImages.Update(image);
-            _dbContext.SaveChanges();
+            lock (lockObject)
+            {
+                _dbContext.UserImages.Update(image);
+                _dbContext.SaveChanges();
+            }
         }
 
         public void UpdateUser(User user)
         {
-            _dbContext.Users.Update(user);
-            _dbContext.SaveChanges();
+            lock (lockObject)
+            {
+                _dbContext.Users.Update(user);
+                _dbContext.SaveChanges();
+            }
         }
     }
 }

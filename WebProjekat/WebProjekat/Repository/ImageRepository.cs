@@ -8,6 +8,7 @@ namespace WebProjekat.Repository
     public class ImageRepository : IImageRepository
     {
         private readonly DbContextWP _dbContext;
+        private readonly object lockObject = new object();
         public ImageRepository(DbContextWP dbContext)
         {
             _dbContext = dbContext;
@@ -26,8 +27,11 @@ namespace WebProjekat.Repository
 
         public void UpdateProductImage(ProductImage image)
         {
-            _dbContext.ProductImages.Update(image);
-            _dbContext.SaveChanges();
+            lock (lockObject)
+            {
+                _dbContext.ProductImages.Update(image);
+                _dbContext.SaveChanges();
+            }
         }
     }
 }

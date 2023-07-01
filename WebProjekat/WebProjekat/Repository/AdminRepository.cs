@@ -10,6 +10,7 @@ namespace WebProjekat.Repository
     public class AdminRepository : IAdminRepository
     {
         private readonly DbContextWP _dbContext;
+        private readonly object lockObject = new object();
         public AdminRepository(DbContextWP dbContext)
         {
             _dbContext = dbContext;
@@ -31,8 +32,11 @@ namespace WebProjekat.Repository
 
         public void SetSellerStatus(Seller seller)
         {
-            _dbContext.Users.Update(seller);
-            _dbContext.SaveChanges();
+            lock (lockObject)
+            {
+                _dbContext.Users.Update(seller);
+                _dbContext.SaveChanges();
+            }
         }
     }
 }

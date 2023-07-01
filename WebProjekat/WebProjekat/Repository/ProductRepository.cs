@@ -10,6 +10,7 @@ namespace WebProjekat.Repository
     public class ProductRepository : IProductRepository
     {
         private readonly DbContextWP _dbContext;
+        private readonly object lockObject = new object();
         public ProductRepository(DbContextWP dbContext)
         {
             _dbContext = dbContext;
@@ -25,14 +26,17 @@ namespace WebProjekat.Repository
             using var transaction = _dbContext.Database.BeginTransaction();
             try
             {
-                _dbContext.Products.Remove(product);
-                _dbContext.SaveChanges();
+                lock (lockObject)
+                {
+                    _dbContext.Products.Remove(product);
+                    _dbContext.SaveChanges();
 
-                _dbContext.ProductImages.Remove(productImage);
-                _dbContext.SaveChanges();
+                    _dbContext.ProductImages.Remove(productImage);
+                    _dbContext.SaveChanges();
 
-                transaction.Commit();
-                return true;
+                    transaction.Commit();
+                    return true;
+                }
             }
             catch(Exception e)
             {
@@ -60,8 +64,11 @@ namespace WebProjekat.Repository
 
         public void UpdateProduct(Product product)
         {
-            _dbContext.Products.Update(product);
-            _dbContext.SaveChanges();
+            lock (lockObject)
+            {
+                _dbContext.Products.Update(product);
+                _dbContext.SaveChanges();
+            }
         }
     }
 }
