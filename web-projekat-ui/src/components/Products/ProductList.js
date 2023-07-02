@@ -8,9 +8,7 @@ function ProductList(props){
           {products.map(product => (
             <Product
               key = {product.productID}
-              productName={product.productName}
-              description = {product.description}
-              price = {product.price}
+              product={product}
             >
             </Product>
           ))}

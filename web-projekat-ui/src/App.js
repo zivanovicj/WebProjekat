@@ -3,6 +3,8 @@ import './App.css';
 import Navigation from './components/Navigation';
 import { GetProducts } from './services/ProductService';
 import ProductList from './components/Products/ProductList';
+import {Routes, Route} from 'react-router-dom';
+import ProductDetails from './components/Products/ProductDetails';
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -17,10 +19,13 @@ function App() {
   }, [])
 
   return (
-    <div className="App">
-      <Navigation></Navigation>
-      <ProductList products={products}></ProductList>
-    </div>
+    <>
+    <Navigation></Navigation>
+    <Routes>
+      <Route path="/" element={<ProductList products={products}/>}></Route>
+      <Route path="/details/:id" element={<ProductDetails/>}></Route>
+    </Routes>
+    </>
   );
 }
 
