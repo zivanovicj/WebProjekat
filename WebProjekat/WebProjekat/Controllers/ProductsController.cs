@@ -28,7 +28,7 @@ namespace WebProjekat.Controllers
             return Ok();
         }
 
-        [HttpGet("products/{email}")]
+        [HttpGet("{email}")]
         public IActionResult GetProductsBySeller(string email)
         {
             if (!User.Identity.Name.Equals(email))
@@ -38,7 +38,7 @@ namespace WebProjekat.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("products")]
+        [HttpGet]
         public IActionResult GetProducts()
         {
             return Ok(_productService.GetProducts());

@@ -91,7 +91,7 @@ namespace WebProjekat.Controllers
             return Ok(_orderService.GetCanceledOrders(User.Identity.Name));
         }
 
-        [HttpGet("orders")]
+        [HttpGet]
         [Authorize(Roles = "ADMIN")]
         public IActionResult GetOrders()
         {
