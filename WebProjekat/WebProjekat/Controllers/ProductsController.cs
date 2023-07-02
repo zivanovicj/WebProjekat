@@ -44,6 +44,20 @@ namespace WebProjekat.Controllers
             return Ok(_productService.GetProducts());
         }
 
+        [AllowAnonymous]
+        [HttpGet("details/{productID}")]
+        public IActionResult GetProduct(string productID)
+        {
+            var result = Int32.TryParse(productID, out int id);
+            if (!result)
+                return BadRequest("Inavlid product ID");
+
+            var product = _productService.GetProduct(id);
+            if (product == null)
+                return NotFound();
+            return Ok(product);
+        }
+
         [HttpPost("modify/{productID}")]
         public IActionResult ModifyProduct([FromBody] ProductDTO product, string productID)
         {

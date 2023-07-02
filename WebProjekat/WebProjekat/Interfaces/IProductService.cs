@@ -10,5 +10,6 @@ namespace WebProjekat.Interfaces
         List<ProductDTO> GetProducts();
         bool UpdateProduct(ProductDTO product, string sellerID, out string message);
         bool DeleteProduct(int productID, string sellerID, out string message);
+        ProductDTO GetProduct(int id);
     }
 }

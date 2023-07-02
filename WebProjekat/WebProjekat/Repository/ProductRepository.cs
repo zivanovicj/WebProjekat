@@ -70,5 +70,27 @@ namespace WebProjekat.Repository
                 _dbContext.SaveChanges();
             }
         }
+
+        public Product GetDetailedProduct(int id, out ProductImage image)
+        {
+            using var transaction = _dbContext.Database.BeginTransaction();
+            try
+            {
+                lock (lockObject)
+                {
+                    var product = _dbContext.Products.Find(id);
+                    image = _dbContext.ProductImages.Where(x => x.ProductID.Equals(product.ProductID)).FirstOrDefault();
+
+                    transaction.Commit();
+                    return product;
+                }
+            }
+            catch (Exception e)
+            {
+                transaction.Rollback();
+                image = null;
+                return null;
+            }
+        }
     }
 }

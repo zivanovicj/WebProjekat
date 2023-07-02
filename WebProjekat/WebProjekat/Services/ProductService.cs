@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using WebProjekat.DTO.ProductDTO;
@@ -41,6 +42,22 @@ namespace WebProjekat.Services
             _productRepository.DeleteProduct(product, productImage);
             message = "Success";
             return true;
+        }
+
+        public ProductDTO GetProduct(int id)
+        {
+            var product = _productRepository.GetDetailedProduct(id, out ProductImage image);
+            if (product == null)
+                return null;
+            var result = _mapper.Map<ProductDTO>(product);
+            if (image != null)
+            {
+                string imageBase64Data = Convert.ToBase64String(image.ImageData);
+                result.Image = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+            }
+            else
+                result.Image = "";
+            return result;
         }
 
         public List<ProductDTO> GetProducts()
