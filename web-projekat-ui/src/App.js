@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import Navigation from './components/Navigation';
 import { GetProducts } from './services/ProductService';
-import ProductList from './components/Products/ProductList';
+import ProductList from './components/Products/ProductList.js';
 import {Routes, Route} from 'react-router-dom';
 import ProductDetails from './components/Products/ProductDetails';
+import LogInForm from './components/LogInRegister/LogInForm';
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -12,7 +13,6 @@ function App() {
   useEffect(()=>{
     const get = async() => {
       const response = await GetProducts();
-      console.log(response.data);
       setProducts(response.data);
     }
     get();
@@ -24,6 +24,7 @@ function App() {
     <Routes>
       <Route path="/" element={<ProductList products={products}/>}></Route>
       <Route path="/details/:id" element={<ProductDetails/>}></Route>
+      <Route path="/login" element={<LogInForm/>}></Route>
     </Routes>
     </>
   );
