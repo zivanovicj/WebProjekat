@@ -5,11 +5,38 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/esm/Button';
 import { LogIn } from '../../services/UserService';
 import { useNavigate } from 'react-router-dom';
+import { useGoogleLogin } from '@react-oauth/google';
+import { GoogleLogIn, LogInGoogle } from '../../services/UserService';
 
 function LogInForm (){
     const [validated, setValidated] = useState(false);
     const navigate = useNavigate();
     const [validationText, setValidationText] = useState("");
+
+    const login = useGoogleLogin({
+      onSuccess: async (codeResponse) => {
+        await GoogleLogIn(codeResponse).then(async (result) => {
+          await LogInGoogle(result.data).then((tokenInfo) => {
+            let userType = '';
+            localStorage.setItem('token', tokenInfo.data.token);
+            if(tokenInfo.data.userType === "0")
+              userType = 'ADMIN'
+            else if(tokenInfo.data.userType === "1")
+              userType = 'CUSTOMER'
+            else
+              userType = 'SELLER'  
+            localStorage.setItem('userType', userType);
+            navigate('/');
+            navigate(0);
+          }).catch((failMessage) => {
+            setValidationText(failMessage.response.data);
+          })
+        }).catch((err) => {
+          setValidationText(err.response.data);
+        })
+      },
+      onError: (error) => setValidationText(error)
+    });
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -29,18 +56,17 @@ function LogInForm (){
             }
             await LogIn(data).then((response) => 
             {
-              let userTypeParse;
+              let userType = '';
               if(response.data.userType === "0")
-                userTypeParse = "ADMIN";
-              else if(response.data.userType === "1")
-                userTypeParse = "CUSTOMER";
+                userType = 'ADMIN'
+              else if(response.data.userType  === "1")
+                userType = 'CUSTOMER'
               else
-                userTypeParse = "SELLER";
-
-              console.log(userTypeParse);
+                userType = 'SELLER'  
+              localStorage.setItem('userType', userType);
               localStorage.setItem('token', response.data.token);
-              localStorage.setItem('userType', userTypeParse);
               navigate('/');
+              navigate(0);
             }
             ).catch((err) => {setValidationText(err.response.data)});
         }
@@ -69,6 +95,9 @@ function LogInForm (){
           <Form.Text id="validation" muted>{validationText}</Form.Text>
           <br/>
           <Button type="submit">Log In</Button>
+          <br/>
+          <br/>
+          <button onClick={() => login()}>Sign in with Google 🚀 </button>
         </Form>
         </div>
       );

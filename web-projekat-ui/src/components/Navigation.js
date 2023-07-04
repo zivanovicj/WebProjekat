@@ -8,6 +8,8 @@ function Navigation(){
 
   const logoutHandler = (event) => {
     event.preventDefault();
+    localStorage.removeItem('userType');
+    localStorage.removeItem('token');
     setUserType(null);
   }
 

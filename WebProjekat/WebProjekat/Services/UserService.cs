@@ -135,10 +135,12 @@ namespace WebProjekat.Services
         public TokenDTO GoogleLogInUser(GoogleLogInDTO newUser)
         {
             var user = _userRepository.GetUser(newUser.Email);
-            if(user == null)
-                _userRepository.AddUser(_mapper.Map<Customer>(newUser));
-            if (user.UserType != EUserType.CUSTOMER)
-                return null;
+            if (user == null)
+            {
+                var customer = _mapper.Map<Customer>(newUser);
+                customer.UserType = EUserType.CUSTOMER;
+                _userRepository.AddUser(customer);
+            }
 
             TokenDTO token = new TokenDTO()
             {
