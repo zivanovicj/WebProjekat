@@ -119,12 +119,18 @@ namespace WebProjekat.Services
 
         public UserInfoDTO GetInfo(string email)
         {
-            var user = _userRepository.GetUser(email);
-
+            var user = _userRepository.GetUserDetails(email, out UserImage image);
             if (user == null)
                 return null;
-
-            return _mapper.Map<UserInfoDTO>(user);
+            var result = _mapper.Map<UserInfoDTO>(user);
+            if (image != null)
+            {
+                string imageBase64Data = Convert.ToBase64String(image.ImageData);
+                result.Image = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+            }
+            else
+                result.Image = "";
+            return result;
         }
 
         public UserImage GetUserImage(string userID)

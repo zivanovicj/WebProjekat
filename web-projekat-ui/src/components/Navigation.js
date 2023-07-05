@@ -2,15 +2,20 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Navigation(){
+  const navigate = useNavigate();
   const [userType, setUserType] = useState(localStorage.getItem('userType'));
+  const email = localStorage.getItem('email');
 
   const logoutHandler = (event) => {
     event.preventDefault();
     localStorage.removeItem('userType');
     localStorage.removeItem('token');
+    localStorage.removeItem('email');
     setUserType(null);
+    navigate('/');
   }
 
     return (
@@ -20,7 +25,7 @@ function Navigation(){
           <Nav className="ml-auto">
             {userType === null && <Nav.Link href="#home">Register</Nav.Link>}
             {userType === null && <Nav.Link href="/login">Log In</Nav.Link>}
-            {userType !== null && <Nav.Link href="#profile">My Profile</Nav.Link>}
+            {userType !== null && <Nav.Link href={'/profile/' + email}>My Profile</Nav.Link>}
             {userType !== null && <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>}
           </Nav>
         </Container>

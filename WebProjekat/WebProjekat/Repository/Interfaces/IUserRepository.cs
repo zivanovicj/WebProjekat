@@ -7,6 +7,7 @@ namespace WebProjekat.Repository.Interfaces
     {
         List<User> GetUsers();
         User GetUser(string email);
+        User GetUserDetails(string email, out UserImage image);
         void AddUser(User user);
         void UpdateUser(User user);
         void AddUserImage(UserImage image);

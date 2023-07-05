@@ -8,13 +8,18 @@ import { useState } from 'react';
 function ProductDetails(){
     const {id} = useParams();
     const [product, setProduct] = useState([]);
-    const loggedIn = localStorage.getItem("token");
+    const [message, setMessage] = useState('');
+    const loggedIn = localStorage.getItem('userType');
   
     useEffect(()=>{
         const get = async() => {
-        const response = await GetProduct(id);
-        console.log(response.data);
-        setProduct(response.data);
+          await GetProduct(id).then((response) => {
+            setProduct(response.data);
+            setMessage('');
+          }).catch((error) => {
+            setProduct([]);
+            setMessage(error.response.data);
+          });
         }
         get();
     }, [id])
@@ -30,7 +35,8 @@ function ProductDetails(){
             <Card.Title>{product.productName}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">{product.price} RSD</Card.Subtitle>
             <Card.Text>{product.description}</Card.Text>
-            {loggedIn !== null && <Button variant="primary">Add to cart</Button>}
+            <Card.Subtitle>{message}</Card.Subtitle>
+            {loggedIn === 'CUSTOMER' && <Button variant="primary">Add to cart</Button>}
           </Card.Body>
         </Card>
         </div>

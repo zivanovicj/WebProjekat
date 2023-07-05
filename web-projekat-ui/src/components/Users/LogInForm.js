@@ -19,13 +19,14 @@ function LogInForm (){
           await LogInGoogle(result.data).then((tokenInfo) => {
             let userType = '';
             localStorage.setItem('token', tokenInfo.data.token);
-            if(tokenInfo.data.userType === "0")
+            if(tokenInfo.data.userType === 0)
               userType = 'ADMIN'
-            else if(tokenInfo.data.userType === "1")
+            else if(tokenInfo.data.userType === 1)
               userType = 'CUSTOMER'
             else
               userType = 'SELLER'  
             localStorage.setItem('userType', userType);
+            localStorage.setItem('email', result.data.email);
             navigate('/');
             navigate(0);
           }).catch((failMessage) => {
@@ -57,14 +58,15 @@ function LogInForm (){
             await LogIn(data).then((response) => 
             {
               let userType = '';
-              if(response.data.userType === "0")
+              if(response.data.userType === 0)
                 userType = 'ADMIN'
-              else if(response.data.userType  === "1")
+              else if(response.data.userType  === 1)
                 userType = 'CUSTOMER'
               else
                 userType = 'SELLER'  
               localStorage.setItem('userType', userType);
               localStorage.setItem('token', response.data.token);
+              localStorage.setItem('email', data.Email);
               navigate('/');
               navigate(0);
             }
@@ -73,7 +75,7 @@ function LogInForm (){
     };
 
     return (
-        <div>
+      <div>
         <Form onSubmit={handleSubmit} noValidate validated={validated} className="w-50 mt-5 mx-auto col-10 col-md-8 col-lg-6">
           <Form.Group as={Row} className="mb-3">
             <Form.Label column sm="2">
@@ -97,7 +99,7 @@ function LogInForm (){
           <Button type="submit">Log In</Button>
           <br/>
           <br/>
-          <button onClick={() => login()}>Sign in with Google 🚀 </button>
+          <Button style={{width: '200px'}} variant="primary" onClick={() => login() } >Sign in with Google 🚀</Button>
         </Form>
         </div>
       );

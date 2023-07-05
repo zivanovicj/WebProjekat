@@ -5,7 +5,8 @@ import { GetProducts } from './services/ProductService';
 import ProductList from './components/Products/ProductList.js';
 import {Routes, Route} from 'react-router-dom';
 import ProductDetails from './components/Products/ProductDetails';
-import LogInForm from './components/LogInRegister/LogInForm';
+import LogInForm from './components/Users/LogInForm';
+import UserProfile from './components/Users/UserProfile';
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -25,6 +26,7 @@ function App() {
       <Route path="/" element={<ProductList products={products}/>}></Route>
       <Route path="/details/:id" element={<ProductDetails/>}></Route>
       <Route path="/login" element={<LogInForm/>}></Route>
+      <Route path='/profile/:email' element={<UserProfile/>}></Route>
     </Routes>
     </>
   );

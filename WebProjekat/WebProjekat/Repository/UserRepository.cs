@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WebProjekat.Infrastructure;
 using WebProjekat.Models;
@@ -57,6 +58,28 @@ namespace WebProjekat.Repository
             {
                 _dbContext.Users.Update(user);
                 _dbContext.SaveChanges();
+            }
+        }
+
+        public User GetUserDetails(string email, out UserImage image)
+        {
+            using var transaction = _dbContext.Database.BeginTransaction();
+            try
+            {
+                lock (lockObject)
+                {
+                    var user = _dbContext.Users.Find(email);
+                    image = _dbContext.UserImages.Where(x => x.UserID.Equals(email)).FirstOrDefault();
+
+                    transaction.Commit();
+                    return user;
+                }
+            }
+            catch (Exception e)
+            {
+                transaction.Rollback();
+                image = null;
+                return null;
             }
         }
     }

@@ -12,5 +12,6 @@ namespace WebProjekat.DTO.UserDTO
         public DateTime DateOfBirth { get; set; }
         public string Address { get; set; }
         public ESellerStatus? Approved { get; set; }
+        public string Image { get; set; }
     }
 }

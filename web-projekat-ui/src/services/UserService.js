@@ -28,3 +28,13 @@ export const LogInGoogle = async (info) => {
 
     return await axios.post('https://localhost:44365/api/Users/googleLogin', header)
 }
+
+export const GetUserDetails = async (info) => {
+    return await axios.get('https://localhost:44365/api/Users/' + info.email,
+        {
+            headers: {
+                "Authorization" : 'Bearer ' + info.token
+            }
+        }
+    )
+}
