@@ -38,3 +38,22 @@ export const GetUserDetails = async (info) => {
         }
     )
 }
+
+export const UpdateUserInfo = async (info) => {
+    return await axios.post('https://localhost:44365/api/Users/update', info.user,
+    {
+        headers: {
+            "Authorization" : 'Bearer ' + info.token
+        }
+    }
+    )
+}
+
+export const UpdateUserPicture = async (data) => {
+    return await axios.post('https://localhost:44365/api/Users/usrimgUpdate', data.formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            "Authorization" : 'Bearer ' + data.token
+        }
+    })
+}

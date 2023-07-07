@@ -108,10 +108,17 @@ namespace WebProjekat.Controllers
         [Authorize(Roles = "SELLER,ADMIN,CUSTOMER")]
         public IActionResult UpdateImage(IFormFile file)
         {
-            var result = _userService.UpdateUserImage(file, User.Identity.Name);
-            if (!result)
-                return NotFound("You can only update your image");
-            return Ok();
+            try
+            {
+                var result = _userService.UpdateUserImage(file, User.Identity.Name);
+                if (!result)
+                    return NotFound("You can only update your image");
+                return Ok();
+            }
+            catch(Exception e)
+            {
+                return BadRequest("No file uploaded");
+            }
         }
     }
 }

@@ -44,7 +44,7 @@ function UserProfile(){
             {loggedIn === 'SELLER' && user.approved === '1' && <Card.Text>Status: REJECTED</Card.Text>}
             {loggedIn === 'SELLER' && user.approved === '2' && <Card.Text>Status: IN PROCESS</Card.Text>}
             <Card.Subtitle>{message}</Card.Subtitle>
-            <Button variant="primary">Update profile</Button>
+            <Button variant="primary" href={'/updateProfile/' + email}>Update profile</Button>
           </Card.Body>
         </Card>
         </div>
