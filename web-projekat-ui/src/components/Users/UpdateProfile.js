@@ -85,7 +85,10 @@ function UpdateProfile(){
     }, [email])
 
     return (
-        <>
+        <div style={{margin: "auto",
+            width: "20%",
+            border: "3px",
+            padding: "10px"}}>
         <Form onSubmit={handleUpdate}>
             <Form.Group className="mb-3">
                 <Form.Label>Select new profile picture</Form.Label>
@@ -117,7 +120,7 @@ function UpdateProfile(){
             <br/>
             <Button type="submit">Update profile</Button>
         </Form>
-        </>
+        </div>
     );
 }
 

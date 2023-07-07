@@ -8,14 +8,17 @@ import ProductDetails from './components/Products/ProductDetails';
 import LogInForm from './components/Users/LogInForm';
 import UserProfile from './components/Users/UserProfile';
 import UpdateProfile from './components/Users/UpdateProfile';
+import AdminUserList from './components/Users/AdminUserList';
 
 function App() {
   const [products, setProducts] = useState([]);
   
   useEffect(()=>{
     const get = async() => {
-      const response = await GetProducts();
-      setProducts(response.data);
+      await GetProducts().then((response) => {
+        setProducts(response.data);
+      }).catch((error) => {
+      });
     }
     get();
   }, [])
@@ -29,6 +32,8 @@ function App() {
       <Route path="/login" element={<LogInForm/>}></Route>
       <Route path='/profile/:email' element={<UserProfile/>}></Route>
       <Route path='/updateProfile/:email' element={<UpdateProfile/>}></Route>
+      <Route path='/customers' element={<AdminUserList/>}></Route>
+      <Route path='/sellers' element={<AdminUserList/>}></Route>
     </Routes>
     </>
   );

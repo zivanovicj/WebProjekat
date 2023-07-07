@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function Navigation(){
   const navigate = useNavigate();
@@ -25,6 +26,12 @@ function Navigation(){
           <Nav className="ml-auto">
             {userType === null && <Nav.Link href="#home">Register</Nav.Link>}
             {userType === null && <Nav.Link href="/login">Log In</Nav.Link>}
+            {userType === 'ADMIN' && 
+              <NavDropdown title="Options" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/customers">Customers</NavDropdown.Item>
+                <NavDropdown.Item href="/sellers">Sellers</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.3">Orders</NavDropdown.Item>
+              </NavDropdown>}
             {userType !== null && <Nav.Link href={'/profile/' + email}>My Profile</Nav.Link>}
             {userType !== null && <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>}
           </Nav>
