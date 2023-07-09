@@ -9,6 +9,7 @@ import LogInForm from './components/Users/LogInForm';
 import UserProfile from './components/Users/UserProfile';
 import UpdateProfile from './components/Users/UpdateProfile';
 import AdminUserList from './components/Users/AdminUserList';
+import RegisterUser from './components/Users/RegisterUser';
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -30,6 +31,7 @@ function App() {
       <Route path="/" element={<ProductList products={products}/>}></Route>
       <Route path="/details/:id" element={<ProductDetails/>}></Route>
       <Route path="/login" element={<LogInForm/>}></Route>
+      <Route path="/register" element={<RegisterUser/>}></Route>
       <Route path='/profile/:email' element={<UserProfile/>}></Route>
       <Route path='/updateProfile/:email' element={<UpdateProfile/>}></Route>
       <Route path='/customers' element={<AdminUserList/>}></Route>

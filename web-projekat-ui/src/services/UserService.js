@@ -57,3 +57,8 @@ export const UpdateUserPicture = async (data) => {
         }
     })
 }
+
+export const UserRegistration = async (newUser) => {
+    console.log(newUser)
+    return await axios.post('https://localhost:44365/api/Users/register', newUser);
+}

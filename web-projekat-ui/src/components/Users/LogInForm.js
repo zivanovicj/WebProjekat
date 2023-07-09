@@ -82,7 +82,7 @@ function LogInForm (){
               Email
             </Form.Label>
             <Col sm="10">
-              <Form.Control type="text" id="email" required defaultValue="email@example.com" />
+              <Form.Control type="text" id="email" required placeholder="email@example.com" />
             </Col>
           </Form.Group>
     

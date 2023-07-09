@@ -24,7 +24,7 @@ function Navigation(){
         <Container>
           <Navbar.Brand href="/">Web Shop</Navbar.Brand>
           <Nav className="ml-auto">
-            {userType === null && <Nav.Link href="#home">Register</Nav.Link>}
+            {userType === null && <Nav.Link href="/register">Register</Nav.Link>}
             {userType === null && <Nav.Link href="/login">Log In</Nav.Link>}
             {userType === 'ADMIN' && 
               <NavDropdown title="Options" id="basic-nav-dropdown">

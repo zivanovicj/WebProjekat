@@ -85,6 +85,11 @@ namespace WebProjekat.Services
             }
             
             var user = _userRepository.GetUser(newUser.Email);
+            if (user != null)
+            {
+                message = "User is already registered with that email";
+                return token;
+            }
             if (newUser.UserType == EUserType.ADMIN)
             {
                 message = "You cannot register as an admin";
@@ -199,7 +204,11 @@ namespace WebProjekat.Services
         public bool UpdateUserImage(IFormFile file, string userID)
         {
             var userImage = _userRepository.GetUserImage(userID);
-            if (userImage == null) return false;
+            if (userImage == null)
+            {
+                userImage = new UserImage();
+                userImage.UserID = userID;
+            }
             if (userImage.UserID != userID) return false;
 
             MemoryStream ms = new MemoryStream();
