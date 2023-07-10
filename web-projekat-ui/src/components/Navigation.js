@@ -30,7 +30,7 @@ function Navigation(){
               <NavDropdown title="Options" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/customers">Customers</NavDropdown.Item>
                 <NavDropdown.Item href="/sellers">Sellers</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Orders</NavDropdown.Item>
+                <NavDropdown.Item href="/allOrders">Orders</NavDropdown.Item>
               </NavDropdown>}
             {userType !== null && <Nav.Link href={'/profile/' + email}>My Profile</Nav.Link>}
             {userType !== null && <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>}

@@ -58,6 +58,21 @@ namespace WebProjekat.Controllers
             return Ok(order);
         }
 
+        [HttpGet("admin/{orderID}")]
+        [Authorize(Roles = "ADMIN")]
+        public IActionResult GetAdminOrder(string orderID)
+        {
+            if (!Int32.TryParse(orderID, out int id))
+                return BadRequest("Invalid order");
+
+            var order = _orderService.GetOrder(id, out string message);
+
+            if (order == null)
+                return NotFound(message);
+
+            return Ok(order);
+        }
+
         [HttpGet("seller/{orderID}")]
         [Authorize(Roles = "SELLER")]
         public IActionResult GetOrderSeller(string orderID)

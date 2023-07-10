@@ -6,6 +6,7 @@ namespace WebProjekat.DTO.OrderDTO
 {
     public class OrderDTO
     {
+        public int? OrderID { get; set; }
         public string? CustomerID { get; set; }
         public string Comment { get; set; }
         public string DeliveryAddress { get; set; }

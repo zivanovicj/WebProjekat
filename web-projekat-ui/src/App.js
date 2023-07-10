@@ -10,6 +10,8 @@ import UserProfile from './components/Users/UserProfile';
 import UpdateProfile from './components/Users/UpdateProfile';
 import AdminUserList from './components/Users/AdminUserList';
 import RegisterUser from './components/Users/RegisterUser';
+import OrderList from './components/Orders/OrderList';
+import OrderDetails from './components/Orders/OrderDetails';
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -36,6 +38,8 @@ function App() {
       <Route path='/updateProfile/:email' element={<UpdateProfile/>}></Route>
       <Route path='/customers' element={<AdminUserList/>}></Route>
       <Route path='/sellers' element={<AdminUserList/>}></Route>
+      <Route path='/allOrders' element={<OrderList/>}></Route>
+      <Route path='/orderDetails/:orderID' element={<OrderDetails/>}></Route>
     </Routes>
     </>
   );

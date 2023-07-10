@@ -57,19 +57,19 @@ namespace WebProjekat.Repository
 
         public List<OrderItem> GetOrderItems(int orderID)
         {
-            return _dbContext.OrderItems.Where(x => x.OrderID == orderID).ToList();
+            return _dbContext.OrderItem.Where(x => x.OrderID == orderID).ToList();
         }
 
         public List<int> GetOrderItemsByProductIDs(List<int> productIDs)
         {
-            return _dbContext.OrderItems.Where(x => productIDs.Contains(x.ProductID))
+            return _dbContext.OrderItem.Where(x => productIDs.Contains(x.ProductID))
                                         .Select(x => x.OrderID)
                                         .ToList();
         }
 
         public List<OrderItem> GetOrderItemsBySeller(int orderID, List<int> productIDs)
         {
-            return _dbContext.OrderItems.Where(x => (x.OrderID == orderID) &&
+            return _dbContext.OrderItem.Where(x => (x.OrderID == orderID) &&
                                                      (productIDs.Contains(x.ProductID)))
                                         .ToList();
         }
