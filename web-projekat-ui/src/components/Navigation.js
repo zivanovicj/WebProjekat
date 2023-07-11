@@ -32,6 +32,13 @@ function Navigation(){
                 <NavDropdown.Item href="/sellers">Sellers</NavDropdown.Item>
                 <NavDropdown.Item href="/allOrders">Orders</NavDropdown.Item>
               </NavDropdown>}
+            {userType === 'CUSTOMER' && 
+              <NavDropdown title="Options" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/delivered">Delievered orders</NavDropdown.Item>
+                <NavDropdown.Item href="/pending">Pending orders</NavDropdown.Item>
+                <NavDropdown.Item href="/canceled">Canceled orders</NavDropdown.Item>
+              </NavDropdown>}
+            {userType === 'CUSTOMER' && <Nav.Link href='/myCart'>My Cart</Nav.Link>}
             {userType !== null && <Nav.Link href={'/profile/' + email}>My Profile</Nav.Link>}
             {userType !== null && <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>}
           </Nav>

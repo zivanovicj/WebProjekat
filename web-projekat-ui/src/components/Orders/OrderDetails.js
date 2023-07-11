@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import { GetOrderDetails } from "../../services/OrderService";
+import { GetOrderDetails, GetOrderDetailsCustomer } from "../../services/OrderService";
 import { useParams } from 'react-router-dom';
 import OrderItem from './OrderItem';
 import Card from 'react-bootstrap/Card';
@@ -8,19 +8,31 @@ function OrderDetails(){
     const {orderID} = useParams();
     const [order, setOrder] = useState([]);
     const [message, setMessage] = useState('');
+    const userType = localStorage.getItem('userType');
 
     useEffect(()=>{
       const get = async() => {
-        await GetOrderDetails(orderID).then((response) => {
-          setOrder(response.data);
-          setMessage('');
-        }).catch((error) => {
-          setOrder([]);
-          setMessage(error.response.data);
-        });
+        if(userType === 'ADMIN'){
+          await GetOrderDetails(orderID).then((response) => {
+            setOrder(response.data);
+            setMessage('');
+          }).catch((error) => {
+            setOrder([]);
+            setMessage(error.response.data);
+          });
+        }
+        else if(userType === 'CUSTOMER'){
+          await GetOrderDetailsCustomer(orderID).then((response) => {
+            setOrder(response.data);
+            setMessage('');
+          }).catch((error) => {
+            setOrder([]);
+            setMessage(error.response.data);
+          });
+        }
       }
       get();
-  }, [orderID])
+  }, [orderID, userType])
 
     return (
       <div style={{textAlign:"center"}}>
