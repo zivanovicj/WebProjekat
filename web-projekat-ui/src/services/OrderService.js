@@ -39,3 +39,27 @@ export const GetCanceledOrders = async () => {
         }
     })
 }
+
+export const GetDeliveredSeller = async () => {
+    return await axios.get('https://localhost:44365/api/Orders/deliveredSeller', {
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+    })
+}
+
+export const GetOrderDetailsSeller = async (orderID) => {
+    return await axios.get('https://localhost:44365/api/Orders/seller/' + orderID, {
+        headers:{
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+    })
+}
+
+export const GetCanceledSeller = async () => {
+    return await axios.get('https://localhost:44365/api/Orders/canceledSeller', {
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+    })
+}

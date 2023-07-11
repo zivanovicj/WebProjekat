@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import { GetOrderDetails, GetOrderDetailsCustomer } from "../../services/OrderService";
+import { GetOrderDetails, GetOrderDetailsCustomer, GetOrderDetailsSeller } from "../../services/OrderService";
 import { useParams } from 'react-router-dom';
 import OrderItem from './OrderItem';
 import Card from 'react-bootstrap/Card';
@@ -30,6 +30,15 @@ function OrderDetails(){
             setMessage(error.response.data);
           });
         }
+        else if(userType === 'SELLER'){
+          await GetOrderDetailsSeller(orderID).then((response) => {
+            setOrder(response.data);
+            setMessage('');
+          }).catch((error) => {
+            setOrder([]);
+            setMessage(error.response.data);
+          });
+        }
       }
       get();
   }, [orderID, userType])
@@ -40,7 +49,7 @@ function OrderDetails(){
       <Card>
           <Card.Body>
             <Card.Text style = {{fontWeight: 'bold'}}>{order.customerID}</Card.Text>
-            <Card.Subtitle className="mb-2 text-muted">{order.deliveryAddress} RSD</Card.Subtitle>
+            <Card.Subtitle className="mb-2 text-muted">{order.deliveryAddress}</Card.Subtitle>
             {Object.keys(order).includes('timeOfOrder') && <Card.Text>Time of order: {order.timeOfOrder.replace('T', ' ')}</Card.Text>}
             {Object.keys(order).includes('deliveryTime') && <Card.Text>Delivery time: {order.deliveryTime.replace('T', ' ')}</Card.Text>}
             <Card.Text>Price: {order.price} RSD</Card.Text>

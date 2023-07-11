@@ -35,10 +35,18 @@ function Navigation(){
             {userType === 'CUSTOMER' && 
               <NavDropdown title="Options" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/delivered">Delievered orders</NavDropdown.Item>
-                <NavDropdown.Item href="/pending">Pending orders</NavDropdown.Item>
+                <NavDropdown.Item href="#pending">Pending orders</NavDropdown.Item>
                 <NavDropdown.Item href="/canceled">Canceled orders</NavDropdown.Item>
               </NavDropdown>}
-            {userType === 'CUSTOMER' && <Nav.Link href='/myCart'>My Cart</Nav.Link>}
+            {userType === 'SELLER' && 
+              <NavDropdown title="Options" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/deliveredSeller">Delievered orders</NavDropdown.Item>
+                <NavDropdown.Item href="#pendingSeller">Pending orders</NavDropdown.Item>
+                <NavDropdown.Item href="/canceledSeller">Canceled orders</NavDropdown.Item>
+              </NavDropdown>}
+            {userType === 'CUSTOMER' && <Nav.Link href='#myCart'>My Cart</Nav.Link>}
+            {userType === 'SELLER' && <Nav.Link href='#addProduct'>Add Product</Nav.Link>}
+            {userType === 'SELLER' && <Nav.Link href='#myProducts'>My Products</Nav.Link>}
             {userType !== null && <Nav.Link href={'/profile/' + email}>My Profile</Nav.Link>}
             {userType !== null && <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>}
           </Nav>

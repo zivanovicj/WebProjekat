@@ -14,6 +14,8 @@ import OrderList from './components/Orders/OrderList';
 import OrderDetails from './components/Orders/OrderDetails';
 import DelieveredOrdersList from './components/Orders/DelieveredOrdersList';
 import CanceledOrdersList from './components/Orders/CanceledOrdersList';
+import DeliveredOrdersSeller from './components/Orders/DeliveredOrdersSeller';
+import CanceledOrdersSeller from './components/Orders/CanceledOrdersSeller';
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -44,6 +46,8 @@ function App() {
       <Route path='/orderDetails/:orderID' element={<OrderDetails/>}></Route>
       <Route path='/delivered' element={<DelieveredOrdersList/>}></Route>
       <Route path='/canceled' element={<CanceledOrdersList/>}></Route>
+      <Route path='/deliveredSeller' element={<DeliveredOrdersSeller/>}></Route>
+      <Route path='/canceledSeller' element={<CanceledOrdersSeller/>}></Route>
     </Routes>
     </>
   );

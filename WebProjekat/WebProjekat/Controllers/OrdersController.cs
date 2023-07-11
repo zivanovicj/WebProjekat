@@ -113,7 +113,7 @@ namespace WebProjekat.Controllers
             return Ok(_orderService.GetOrders());
         }
 
-        [HttpGet("delieveredSeller")]
+        [HttpGet("deliveredSeller")]
         [Authorize(Roles = "SELLER")]
         public IActionResult GetDelieveredSeller()
         {
