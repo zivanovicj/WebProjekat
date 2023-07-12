@@ -56,6 +56,11 @@ namespace WebProjekat.Services
             if(product.SellerID  != sellerID) return false;
 
             var image = _imageRepository.GetProductImage(productID);
+            if(image == null)
+            {
+                image = new ProductImage();
+                image.ProductID = productID;
+            }
 
             MemoryStream ms = new MemoryStream();
             file.CopyTo(ms);

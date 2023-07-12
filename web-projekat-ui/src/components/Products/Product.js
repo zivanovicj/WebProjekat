@@ -11,7 +11,7 @@ function Product(props){
             <Card.Subtitle className="mb-2 text-muted">{product.price} RSD</Card.Subtitle>
             <Card.Text>{product.description}</Card.Text>
             <Button href={'/details/' + product.productID} variant="primary">Details</Button>
-            {modify && <Button href='#modify' variant='primary'>Modify</Button>}
+            {modify && <Button href={'/modifyProduct/' + product.productID} variant='primary'>Modify</Button>}
           </Card.Body>
         </Card>
       );

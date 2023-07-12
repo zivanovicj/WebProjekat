@@ -25,3 +25,28 @@ export const AddProduct = async (data) => {
         }
     })
 }
+
+export const UpdateProductPicture = async (data) => {
+    return await axios.post('https://localhost:44365/api/Images/pimgUpdate/' + data.productID, data.formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            "Authorization" : 'Bearer ' + data.token
+        }
+    })
+}
+
+export const UpdateProduct = async(data) => {
+    return await axios.post('https://localhost:44365/api/Products/modify/' + data.productID, data, {
+        headers:{
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+    })
+}
+
+export const DelteProduct = async(productID) => {
+    return await axios.delete('https://localhost:44365/api/Products/remove/' + productID, {
+        headers:{
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+    })
+}
