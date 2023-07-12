@@ -49,9 +49,7 @@ function UpdateProfile(){
     const handlePictureUpdate = async () => {
         if(document.querySelector('#file').files.length === 0)
             return;
-        console.log('a')
         var formData = new FormData();
-        console.log(document.querySelector('#file').files[0])
         const image = document.querySelector('#file').files[0];
         formData.append("file", image);
 

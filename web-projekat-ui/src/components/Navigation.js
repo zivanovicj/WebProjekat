@@ -45,8 +45,8 @@ function Navigation(){
                 <NavDropdown.Item href="/canceledSeller">Canceled orders</NavDropdown.Item>
               </NavDropdown>}
             {userType === 'CUSTOMER' && <Nav.Link href='#myCart'>My Cart</Nav.Link>}
-            {userType === 'SELLER' && <Nav.Link href='#addProduct'>Add Product</Nav.Link>}
-            {userType === 'SELLER' && <Nav.Link href='#myProducts'>My Products</Nav.Link>}
+            {userType === 'SELLER' && <Nav.Link href='/newProduct'>New Product</Nav.Link>}
+            {userType === 'SELLER' && <Nav.Link href={'/myProducts/' + email}>My Products</Nav.Link>}
             {userType !== null && <Nav.Link href={'/profile/' + email}>My Profile</Nav.Link>}
             {userType !== null && <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>}
           </Nav>
