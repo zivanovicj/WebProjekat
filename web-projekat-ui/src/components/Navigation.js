@@ -16,6 +16,7 @@ function Navigation(){
     localStorage.removeItem('token');
     localStorage.removeItem('email');
     setUserType(null);
+    navigate(0);
     navigate('/');
   }
 
@@ -44,7 +45,6 @@ function Navigation(){
                 <NavDropdown.Item href="#pendingSeller">Pending orders</NavDropdown.Item>
                 <NavDropdown.Item href="/canceledSeller">Canceled orders</NavDropdown.Item>
               </NavDropdown>}
-            {userType === 'CUSTOMER' && <Nav.Link href='#myCart'>My Cart</Nav.Link>}
             {userType === 'SELLER' && <Nav.Link href='/newProduct'>New Product</Nav.Link>}
             {userType === 'SELLER' && <Nav.Link href={'/myProducts/' + email}>My Products</Nav.Link>}
             {userType !== null && <Nav.Link href={'/profile/' + email}>My Profile</Nav.Link>}

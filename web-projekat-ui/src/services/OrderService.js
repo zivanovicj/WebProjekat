@@ -63,3 +63,11 @@ export const GetCanceledSeller = async () => {
         }
     })
 }
+
+export const CreateOrder = async (data) => {
+    return await axios.post('https://localhost:44365/api/Orders/newOrder', data, {
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+    })
+}

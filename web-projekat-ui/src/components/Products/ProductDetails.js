@@ -1,4 +1,3 @@
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useEffect } from 'react';
 import { GetProduct } from '../../services/ProductService';
@@ -9,7 +8,6 @@ function ProductDetails(){
     const {id} = useParams();
     const [product, setProduct] = useState([]);
     const [message, setMessage] = useState('');
-    const loggedIn = localStorage.getItem('userType');
   
     useEffect(()=>{
         const get = async() => {
@@ -36,7 +34,6 @@ function ProductDetails(){
             <Card.Subtitle className="mb-2 text-muted">{product.price} RSD</Card.Subtitle>
             <Card.Text>{product.description}</Card.Text>
             <Card.Subtitle>{message}</Card.Subtitle>
-            {loggedIn === 'CUSTOMER' && <Button variant="primary">Add to cart</Button>}
           </Card.Body>
         </Card>
         </div>
