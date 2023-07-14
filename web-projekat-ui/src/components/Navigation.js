@@ -36,13 +36,13 @@ function Navigation(){
             {userType === 'CUSTOMER' && 
               <NavDropdown title="Options" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/delivered">Delievered orders</NavDropdown.Item>
-                <NavDropdown.Item href="#pending">Pending orders</NavDropdown.Item>
+                <NavDropdown.Item href="/pending">Pending orders</NavDropdown.Item>
                 <NavDropdown.Item href="/canceled">Canceled orders</NavDropdown.Item>
               </NavDropdown>}
             {userType === 'SELLER' && 
               <NavDropdown title="Options" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/deliveredSeller">Delievered orders</NavDropdown.Item>
-                <NavDropdown.Item href="#pendingSeller">Pending orders</NavDropdown.Item>
+                <NavDropdown.Item href="/pendingSeller">Pending orders</NavDropdown.Item>
                 <NavDropdown.Item href="/canceledSeller">Canceled orders</NavDropdown.Item>
               </NavDropdown>}
             {userType === 'SELLER' && <Nav.Link href='/newProduct'>New Product</Nav.Link>}

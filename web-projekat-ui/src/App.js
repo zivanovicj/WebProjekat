@@ -20,6 +20,8 @@ import SellerProducts from './components/Products/SellerProducts';
 import NewProduct from './components/Products/NewProduct';
 import ModifyProduct from './components/Products/ModifyProduct';
 import { CartProvider } from './store/CartContext';
+import PendingOrdersList from './components/Orders/PendingOrdersList';
+import PendingOrdersSeller from './components/Orders/PendingOrdersSeller';
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -57,6 +59,8 @@ function App() {
       <Route path='/myProducts/:email' element={<SellerProducts/>}></Route>
       <Route path='/newProduct' element={<NewProduct/>}></Route>
       <Route path='/modifyProduct/:productID' element={<ModifyProduct/>}></Route>
+      <Route path='/pending' element={<PendingOrdersList/>}></Route>
+      <Route path='/pendingSeller' element={<PendingOrdersSeller/>}></Route>
     </Routes>
     </CartProvider>
     </>

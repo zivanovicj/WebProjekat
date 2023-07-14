@@ -71,3 +71,27 @@ export const CreateOrder = async (data) => {
         }
     })
 }
+
+export const GetPending = async () => {
+    return await axios.get('https://localhost:44365/api/Orders/pending', {
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+    })
+}
+
+export const RemoveOrder = async (orderID) => {
+    return await axios.delete('https://localhost:44365/api/Orders/' + orderID, {
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+    })
+}
+
+export const GetPendingSeller = async () => {
+    return await axios.get('https://localhost:44365/api/Orders/pendingSeller', {
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+    })
+}

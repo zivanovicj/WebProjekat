@@ -75,7 +75,7 @@ namespace WebProjekat.Services
             }
 
             var timeSpan = DateTime.Now - order.TimeOfOrder;
-            if (timeSpan.Days > 0 || timeSpan.Hours > 1)
+            if (timeSpan.Days > 0 || timeSpan.Hours >= 1)
             {
                 message = "You can only cancel orders within one hour of ordering";
                 return false;
