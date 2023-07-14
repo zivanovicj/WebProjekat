@@ -31,8 +31,11 @@ namespace WebProjekat.Repository
                     _dbContext.Products.Remove(product);
                     _dbContext.SaveChanges();
 
-                    _dbContext.ProductImages.Remove(productImage);
-                    _dbContext.SaveChanges();
+                    if (productImage != null)
+                    {
+                        _dbContext.ProductImages.Remove(productImage);
+                        _dbContext.SaveChanges();
+                    }
 
                     transaction.Commit();
                     return true;

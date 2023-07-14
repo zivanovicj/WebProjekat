@@ -40,9 +40,9 @@ function UserProfile(){
             <Card.Subtitle className="mb-2 text-muted">Username: {user.username}</Card.Subtitle>
             {Object.keys(user).includes('dateOfBirth') && <Card.Text>Date of birth: {user.dateOfBirth.split('T')[0]}</Card.Text>}
             <Card.Text>Address: {user.address}</Card.Text>
-            {loggedIn === 'SELLER' && user.approved === '0' && <Card.Text>Status: VERIFIED</Card.Text>}
-            {loggedIn === 'SELLER' && user.approved === '1' && <Card.Text>Status: REJECTED</Card.Text>}
-            {loggedIn === 'SELLER' && user.approved === '2' && <Card.Text>Status: IN PROCESS</Card.Text>}
+            {loggedIn === 'SELLER' && user.approved === 0 && <Card.Text>Status: <b>VERIFIED</b></Card.Text>}
+            {loggedIn === 'SELLER' && user.approved === 1 && <Card.Text>Status: <b>REJECTED</b></Card.Text>}
+            {loggedIn === 'SELLER' && user.approved === 2 && <Card.Text>Status: <b>IN PROCESS</b></Card.Text>}
             <Card.Subtitle>{message}</Card.Subtitle>
             <Button variant="primary" href={'/updateProfile/' + email}>Update profile</Button>
           </Card.Body>

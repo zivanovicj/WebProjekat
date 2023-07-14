@@ -43,7 +43,7 @@ export const UpdateProduct = async(data) => {
     })
 }
 
-export const DelteProduct = async(productID) => {
+export const DeleteProduct = async(productID) => {
     return await axios.delete('https://localhost:44365/api/Products/remove/' + productID, {
         headers:{
             'Authorization': 'Bearer ' + localStorage.getItem('token')

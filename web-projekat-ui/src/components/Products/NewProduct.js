@@ -30,12 +30,6 @@ function NewProduct(){
             amount: parseInt(document.getElementById('amount').value),
             description: document.getElementById('description').value,
         }
-        if(document.querySelector('#file').files.length !== 0){
-            const image = document.querySelector('#file').files[0];
-            data['file'] = image
-        }
-
-        console.log(data);
 
         await AddProduct(data).then((response) => {
             navigate('/myProducts/' + localStorage.getItem('email'))
@@ -70,11 +64,6 @@ function NewProduct(){
                     <Col sm="10">
                         <Form.Control type="text" required id="description"/>
                     </Col>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label>Select product image</Form.Label>
-                    <br/>
-                    <input type="file" id="file" name="file"/>
                 </Form.Group>
                 <Form.Text id="validation" muted>{validationText}</Form.Text>
                 <br/>

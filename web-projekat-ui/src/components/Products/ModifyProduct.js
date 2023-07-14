@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/esm/Button';
 import {useEffect, useState} from 'react';
-import { GetProduct, UpdateProductPicture, UpdateProduct, DelteProduct } from '../../services/ProductService';
+import { GetProduct, UpdateProductPicture, UpdateProduct, DeleteProduct } from '../../services/ProductService';
 
 function ModifyProduct(){
     const [validated, setValidated] = useState(false);
@@ -77,7 +77,7 @@ function ModifyProduct(){
     }
 
     const handleDelete = async () => {
-        await DelteProduct(productID).then((response) => {
+        await DeleteProduct(productID).then((response) => {
             navigate('/myProducts/' + localStorage.getItem('email'));
         }).catch((error) => {
             setValidationText('Something went wrong')

@@ -30,7 +30,7 @@ namespace WebProjekat.Controllers
         }
 
         [HttpGet("{email}")]
-        [Authorize(Roles = "ADMIN,CUSTOMER,SELLER")]
+        [Authorize(Roles = "ADMIN,CUSTOMER,SELLER,UNVERIFIED")]
         public IActionResult GetInfo(string email)
         {
             if (!User.Identity.Name.Equals(email))
@@ -64,7 +64,7 @@ namespace WebProjekat.Controllers
         }
 
         [HttpPost("update")]
-        [Authorize(Roles = "ADMIN,CUSTOMER,SELLER")]
+        [Authorize(Roles = "ADMIN,CUSTOMER,SELLER,UNVERIFIED")]
         public IActionResult UpdateUser([FromBody] UpdateUserDTO user)
         {
             bool result = _userService.UpdateUser(user);

@@ -16,8 +16,8 @@ function Navigation(){
     localStorage.removeItem('token');
     localStorage.removeItem('email');
     setUserType(null);
-    navigate(0);
     navigate('/');
+    navigate(0);
   }
 
     return (
