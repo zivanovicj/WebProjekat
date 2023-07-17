@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const LogIn = async (loginform) =>{
-    return await axios.post('https://localhost:44365/api/Users/login', loginform);
+    return await axios.post(`${process.env.REACT_APP_API_URL}/Users/login`, loginform);
 }
 
 
@@ -26,11 +26,11 @@ export const LogInGoogle = async (info) => {
     if(Object.keys(info).includes('family_name'))
         header.LastName = info.family_name
 
-    return await axios.post('https://localhost:44365/api/Users/googleLogin', header)
+    return await axios.post(`${process.env.REACT_APP_API_URL}/Users/googleLogin`, header)
 }
 
 export const GetUserDetails = async (info) => {
-    return await axios.get('https://localhost:44365/api/Users/' + info.email,
+    return await axios.get(`${process.env.REACT_APP_API_URL}/Users/${info.email}`,
         {
             headers: {
                 "Authorization" : 'Bearer ' + info.token
@@ -40,7 +40,7 @@ export const GetUserDetails = async (info) => {
 }
 
 export const UpdateUserInfo = async (info) => {
-    return await axios.post('https://localhost:44365/api/Users/update', info.user,
+    return await axios.post(`${process.env.REACT_APP_API_URL}/Users/update`, info.user,
     {
         headers: {
             "Authorization" : 'Bearer ' + info.token
@@ -50,7 +50,7 @@ export const UpdateUserInfo = async (info) => {
 }
 
 export const UpdateUserPicture = async (data) => {
-    return await axios.post('https://localhost:44365/api/Users/usrimgUpdate', data.formData, {
+    return await axios.post(`${process.env.REACT_APP_API_URL}/Users/usrimgUpdate`, data.formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
             "Authorization" : 'Bearer ' + data.token
@@ -59,5 +59,5 @@ export const UpdateUserPicture = async (data) => {
 }
 
 export const UserRegistration = async (newUser) => {
-    return await axios.post('https://localhost:44365/api/Users/register', newUser);
+    return await axios.post(`${process.env.REACT_APP_API_URL}/Users/register`, newUser);
 }

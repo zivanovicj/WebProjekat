@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const GetOrders = async (token) => {
-    return await axios.get('https://localhost:44365/api/Orders', {
+    return await axios.get(`${process.env.REACT_APP_API_URL}/Orders`, {
         headers:{
             'Authorization': 'Bearer ' + token
         }
@@ -9,7 +9,7 @@ export const GetOrders = async (token) => {
 }
 
 export const GetOrderDetails = async (orderID) => {
-    return await axios.get('https://localhost:44365/api/Orders/admin/' + orderID, {
+    return await axios.get(`${process.env.REACT_APP_API_URL}/Orders/admin/${orderID}`, {
         headers:{
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
@@ -17,7 +17,7 @@ export const GetOrderDetails = async (orderID) => {
 }
 
 export const GetDelieveredOrders = async () => {
-    return await axios.get('https://localhost:44365/api/Orders/delivered', {
+    return await axios.get(`${process.env.REACT_APP_API_URL}/Orders/delivered`, {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
@@ -25,7 +25,7 @@ export const GetDelieveredOrders = async () => {
 }
 
 export const GetOrderDetailsCustomer = async (orderID) => {
-    return await axios.get('https://localhost:44365/api/Orders/' + orderID, {
+    return await axios.get(`${process.env.REACT_APP_API_URL}/Orders/${orderID}`, {
         headers:{
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
@@ -33,7 +33,7 @@ export const GetOrderDetailsCustomer = async (orderID) => {
 }
 
 export const GetCanceledOrders = async () => {
-    return await axios.get('https://localhost:44365/api/Orders/canceled', {
+    return await axios.get(`${process.env.REACT_APP_API_URL}/Orders/canceled`, {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
@@ -41,7 +41,7 @@ export const GetCanceledOrders = async () => {
 }
 
 export const GetDeliveredSeller = async () => {
-    return await axios.get('https://localhost:44365/api/Orders/deliveredSeller', {
+    return await axios.get(`${process.env.REACT_APP_API_URL}/Orders/seliveredSeller`, {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
@@ -49,7 +49,7 @@ export const GetDeliveredSeller = async () => {
 }
 
 export const GetOrderDetailsSeller = async (orderID) => {
-    return await axios.get('https://localhost:44365/api/Orders/seller/' + orderID, {
+    return await axios.get(`${process.env.REACT_APP_API_URL}/Orders/seller/${orderID}`, {
         headers:{
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
@@ -57,7 +57,7 @@ export const GetOrderDetailsSeller = async (orderID) => {
 }
 
 export const GetCanceledSeller = async () => {
-    return await axios.get('https://localhost:44365/api/Orders/canceledSeller', {
+    return await axios.get(`${process.env.REACT_APP_API_URL}/Orders/canceledSeller`, {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
@@ -65,7 +65,7 @@ export const GetCanceledSeller = async () => {
 }
 
 export const CreateOrder = async (data) => {
-    return await axios.post('https://localhost:44365/api/Orders/newOrder', data, {
+    return await axios.post(`${process.env.REACT_APP_API_URL}/Orders/newOrder`, data, {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
@@ -73,7 +73,7 @@ export const CreateOrder = async (data) => {
 }
 
 export const GetPending = async () => {
-    return await axios.get('https://localhost:44365/api/Orders/pending', {
+    return await axios.get(`${process.env.REACT_APP_API_URL}/Orders/pending`, {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
@@ -81,7 +81,7 @@ export const GetPending = async () => {
 }
 
 export const RemoveOrder = async (orderID) => {
-    return await axios.delete('https://localhost:44365/api/Orders/' + orderID, {
+    return await axios.delete(`${process.env.REACT_APP_API_URL}/Orders/${orderID}`, {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
@@ -89,7 +89,7 @@ export const RemoveOrder = async (orderID) => {
 }
 
 export const GetPendingSeller = async () => {
-    return await axios.get('https://localhost:44365/api/Orders/pendingSeller', {
+    return await axios.get(`${process.env.REACT_APP_API_URL}/Orders/pendingSeller`, {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }

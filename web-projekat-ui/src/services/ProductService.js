@@ -1,17 +1,15 @@
 import axios from 'axios';
 
 export const GetProducts = async () => {
-    //const api = process.env.API_URL;
-    //console.log(api);
-    return await axios.get('https://localhost:44365/api/Products')
+    return await axios.get(`${process.env.REACT_APP_API_URL}/Products`)
 }
 
 export const GetProduct = async (id) => {
-    return await axios.get('https://localhost:44365/api/Products/details/' + id)
+    return await axios.get(`${process.env.REACT_APP_API_URL}/Products/details/${id}`)
 }
 
 export const GetSellerProducts = async () => {
-    return await axios.get('https://localhost:44365/api/Products/' + localStorage.getItem('email'), {
+    return await axios.get(`${process.env.REACT_APP_API_URL}/Products/${localStorage.getItem('email')}`, {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
@@ -19,7 +17,7 @@ export const GetSellerProducts = async () => {
 }
 
 export const AddProduct = async (data) => {
-    return await axios.post('https://localhost:44365/api/Products/addProduct', data, {
+    return await axios.post(`${process.env.REACT_APP_API_URL}/Products/addProduct`, data, {
         headers:{
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
@@ -27,7 +25,7 @@ export const AddProduct = async (data) => {
 }
 
 export const UpdateProductPicture = async (data) => {
-    return await axios.post('https://localhost:44365/api/Images/pimgUpdate/' + data.productID, data.formData, {
+    return await axios.post(`${process.env.REACT_APP_API_URL}/Images/pimgUpdate/${data.productID}`, data.formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
             "Authorization" : 'Bearer ' + data.token
@@ -36,7 +34,7 @@ export const UpdateProductPicture = async (data) => {
 }
 
 export const UpdateProduct = async(data) => {
-    return await axios.post('https://localhost:44365/api/Products/modify/' + data.productID, data, {
+    return await axios.post(`${process.env.REACT_APP_API_URL}/Products/modify/${data.productID}`, data, {
         headers:{
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
@@ -44,7 +42,7 @@ export const UpdateProduct = async(data) => {
 }
 
 export const DeleteProduct = async(productID) => {
-    return await axios.delete('https://localhost:44365/api/Products/remove/' + productID, {
+    return await axios.delete(`${process.env.REACT_APP_API_URL}/Products/remove/${productID}`, {
         headers:{
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
