@@ -28,25 +28,28 @@ function Navigation(){
             {userType === null && <Nav.Link href="/register">Register</Nav.Link>}
             {userType === null && <Nav.Link href="/login">Log In</Nav.Link>}
             {userType === 'ADMIN' && 
-              <NavDropdown title="Options" id="basic-nav-dropdown">
+              <NavDropdown title="Orders" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/customers">Customers</NavDropdown.Item>
                 <NavDropdown.Item href="/sellers">Sellers</NavDropdown.Item>
                 <NavDropdown.Item href="/allOrders">Orders</NavDropdown.Item>
               </NavDropdown>}
             {userType === 'CUSTOMER' && 
-              <NavDropdown title="Options" id="basic-nav-dropdown">
+              <NavDropdown title="Orders" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/delivered">Delievered orders</NavDropdown.Item>
                 <NavDropdown.Item href="/pending">Pending orders</NavDropdown.Item>
                 <NavDropdown.Item href="/canceled">Canceled orders</NavDropdown.Item>
               </NavDropdown>}
             {userType === 'SELLER' && 
-              <NavDropdown title="Options" id="basic-nav-dropdown">
+              <NavDropdown title="Orders" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/deliveredSeller">Delievered orders</NavDropdown.Item>
                 <NavDropdown.Item href="/pendingSeller">Pending orders</NavDropdown.Item>
                 <NavDropdown.Item href="/canceledSeller">Canceled orders</NavDropdown.Item>
               </NavDropdown>}
-            {userType === 'SELLER' && <Nav.Link href='/newProduct'>New Product</Nav.Link>}
-            {userType === 'SELLER' && <Nav.Link href={'/myProducts/' + email}>My Products</Nav.Link>}
+              {userType === 'SELLER' && 
+              <NavDropdown title="Products" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/newProduct">New Product</NavDropdown.Item>
+                <NavDropdown.Item href={'/myProducts/' + email}>My Products</NavDropdown.Item>
+              </NavDropdown>}
             {userType !== null && <Nav.Link href={'/profile/' + email}>My Profile</Nav.Link>}
             {userType !== null && <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>}
           </Nav>

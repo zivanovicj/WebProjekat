@@ -22,6 +22,7 @@ import ModifyProduct from './components/Products/ModifyProduct';
 import { CartProvider } from './store/CartContext';
 import PendingOrdersList from './components/Orders/PendingOrdersList';
 import PendingOrdersSeller from './components/Orders/PendingOrdersSeller';
+import ChangePasswordForm from './components/Users/ChangePasswordForm';
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -61,6 +62,7 @@ function App() {
       <Route path='/modifyProduct/:productID' element={<ModifyProduct/>}></Route>
       <Route path='/pending' element={<PendingOrdersList/>}></Route>
       <Route path='/pendingSeller' element={<PendingOrdersSeller/>}></Route>
+      <Route path='/changePassword' element={<ChangePasswordForm/>}></Route>
     </Routes>
     </CartProvider>
     </>

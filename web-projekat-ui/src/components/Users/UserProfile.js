@@ -45,6 +45,9 @@ function UserProfile(){
             {loggedIn === 'SELLER' && user.approved === 2 && <Card.Text>Status: <b>IN PROCESS</b></Card.Text>}
             <Card.Subtitle>{message}</Card.Subtitle>
             <Button variant="primary" href={'/updateProfile/' + email}>Update profile</Button>
+            <br/>
+            <br/>
+            <Button variant="primary" href='/changePassword'>Change password</Button>
           </Card.Body>
         </Card>
         </div>

@@ -61,3 +61,11 @@ export const UpdateUserPicture = async (data) => {
 export const UserRegistration = async (newUser) => {
     return await axios.post(`${process.env.REACT_APP_API_URL}/Users/register`, newUser);
 }
+
+export const ChangePassword = async (data) => {
+    return await axios.post(`${process.env.REACT_APP_API_URL}/Users/passwordChange`, data, {
+        headers:{
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+    })
+}
