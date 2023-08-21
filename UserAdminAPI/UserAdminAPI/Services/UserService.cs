@@ -88,11 +88,11 @@ namespace UserAdminAPI.Services
                 message = "User is already registered with that email";
                 return token;
             }
-            if (newUser.UserType == EUserType.ADMIN)
-            {
-                message = "You cannot register as an admin";
-                return token;
-            }
+            //if (newUser.UserType == EUserType.ADMIN)
+            //{
+            //    message = "You cannot register as an admin";
+            //    return token;
+            //}
 
             newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
             role = newUser.UserType.ToString();
@@ -109,6 +109,9 @@ namespace UserAdminAPI.Services
                     seller.Approved = ESellerStatus.IN_PROCESS;
                     _userRepository.AddUser(seller);
 
+                    break;
+                case EUserType.ADMIN:
+                    _userRepository.AddUser(_mapper.Map<Admin>(newUser));
                     break;
             }
 
