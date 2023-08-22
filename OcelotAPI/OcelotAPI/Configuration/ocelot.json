@@ -375,6 +375,43 @@
       ],
       "UpstreamPathTemplate": "/api/Orders/canceledSeller",
       "UpstreamHttpMethod": [ "Get" ]
+    },
+    //Images
+    {
+      "DownstreamPathTemplate": "/api/Images/productImage/{productID}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44371
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Images/productImage/{productID}",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Images/pimg/{productID}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44371
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Images/pimg/{productID}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Images/pimgUpdate/{productID}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44371
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Images/pimgUpdate/{productID}",
+      "UpstreamHttpMethod": [ "Post" ]
     }
   ],
 

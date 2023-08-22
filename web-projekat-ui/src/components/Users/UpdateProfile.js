@@ -42,7 +42,7 @@ function UpdateProfile(){
         await UpdateUserInfo(info).then((response) => {
             navigate('/profile/' + email)
         }).catch((error) => {
-            setMessage(error.response.data);
+            setMessage("Something went wrong");
         })
     }
 
